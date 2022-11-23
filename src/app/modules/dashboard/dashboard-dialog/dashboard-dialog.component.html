@@ -1,0 +1,45 @@
+<h3 class="mt-0">{{data.title}}</h3>
+<div class="mt-2" style="max-height: 80vh;overflow: auto;">
+    <div class="flex flex-col gt-xs:flex-row">
+        <div style="flex: none;">
+            <h4>Jobs</h4>
+            <p *ngFor="let c of jobList">
+                <input type="checkbox" [(ngModel)]="c.value" style="margin-right: 10px;"> {{c.name}}
+            </p>
+        </div>
+        <div  style="flex: none;">
+            <h4>Talents</h4>
+            <p *ngFor="let c of talentList">
+                <input type="checkbox" [(ngModel)]="c.value" style="margin-right: 10px;"> {{c.name}}
+            </p>
+        </div>
+        <div  style="flex: none;">
+            <h4>Teams</h4>
+            <p *ngFor="let c of teamList">
+                <input type="checkbox" [(ngModel)]="c.value" style="margin-right: 10px;"> {{c.name}}
+            </p>
+        </div>
+        <div style="flex: none;">
+            <!-- class="flex-auto" -->
+            <h4>Clients</h4>
+            <p *ngFor="let c of clientList">
+                <input type="checkbox" [(ngModel)]="c.value" style="margin-right: 10px;"> {{c.name}}
+            </p>
+        </div>
+        <div style="flex: none;">
+            <h4>Others</h4>
+            <p *ngFor="let c of otherList">
+                <input type="checkbox" [(ngModel)]="c.value" style="margin-right: 10px;"> {{c.name}}
+            </p>
+        </div>
+    </div>
+    <div style="margin-top: 20px;">
+        <button style="float: right;" class="add-section" (click)="closeDialog()" mat-flat-button [color]="'primary'">
+            Close
+        </button>
+        <button style="float: right;margin-right: 20px;" (click)="updateViewMetadata()" class="add-task" mat-flat-button [color]="'primary'">
+            Save
+        </button>
+
+    </div>
+</div>

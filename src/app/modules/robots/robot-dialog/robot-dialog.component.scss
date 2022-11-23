@@ -1,0 +1,8 @@
+.add-task {
+    float: right;
+    margin: 0 10px;
+}
+
+:host ::ng-deep .ngx-datatable.material {
+    box-shadow: none !important;
+}

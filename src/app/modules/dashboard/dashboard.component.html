@@ -1,0 +1,1697 @@
+<div class="flex flex-col flex-auto w-full p-8 xs:p-2">
+  <!-- <mat-menu #menu="matMenu">
+          <p *ngFor="let c of selectedColumn" (click)="$event.stopPropagation()" mat-menu-item>
+              <input type="checkbox" [(ngModel)]="c.value" style="margin-right: 10px;"> {{c.name}}
+          </p>
+          <div mat-menu-item>
+              <button (click)="updateViewMetadata()" mat-flat-button class="w-full" [color]="'primary'">Save</button>
+          </div>
+      </mat-menu> -->
+  <div class="flex flex-wrap w-full">
+    <div *ngIf="buttonActive != 'custom'">
+      <button
+        class="ml-4"
+        mat-flat-button
+        (click)="load('today')"
+        [color]="buttonActive == 'today' ? 'primary' : ''"
+      >
+        Today
+      </button>
+      <button
+        class="ml-2"
+        mat-flat-button
+        (click)="load('week')"
+        [color]="buttonActive == 'week' ? 'primary' : ''"
+      >
+        This week
+      </button>
+      <button
+        class="ml-2"
+        mat-flat-button
+        (click)="load('month')"
+        [color]="buttonActive == 'month' ? 'primary' : ''"
+      >
+        This month
+      </button>
+      <button
+        class="ml-2"
+        mat-flat-button
+        (click)="load('3months')"
+        [color]="buttonActive == '3months' ? 'primary' : ''"
+      >
+        Past 3 months
+      </button>
+      <button
+        class="ml-2"
+        mat-flat-button
+        (click)="load('6months')"
+        [color]="buttonActive == '6months' ? 'primary' : ''"
+      >
+        Past 6 months
+      </button>
+      <button
+        class="ml-2"
+        mat-flat-button
+        (click)="load('year')"
+        [color]="buttonActive == 'year' ? 'primary' : ''"
+      >
+        Past year
+      </button>
+      <button
+        class="ml-2"
+        mat-flat-button
+        (click)="buttonActive = 'custom'"
+        [color]="buttonActive == 'custom' ? 'primary' : ''"
+      >
+        Custom
+      </button>
+    </div>
+    <div class="gt-xs:w-1/2" *ngIf="buttonActive == 'custom'">
+      <mat-form-field class="flex-row gt-xs:pr-3 gt-xs:w-1/3">
+        <mat-label>Start Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          [(ngModel)]="customDate.sdate"
+          [placeholder]="'start date'"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="flex-row gt-xs:pr-3 gt-xs:w-1/3">
+        <mat-label>End Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker2"
+          [(ngModel)]="customDate.edate"
+          [placeholder]="'end date'"
+          [(ngModel)]="customDate.edate"
+          [placeholder]="'end date'"
+          [(ngModel)]="customDate.edate"
+          [placeholder]="'end date'"
+          [(ngModel)]="customDate.edate"
+          [placeholder]="'end date'"
+          [(ngModel)]="customDate.edate"
+          [placeholder]="'end date'"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker2"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+
+      <button
+        class="ml-2"
+        style="position: relative; top: -20px"
+        mat-flat-button
+        (click)="load('custom')"
+        [color]="buttonActive == 'custom' ? 'primary' : ''"
+      >
+        Load
+      </button>
+
+      <button
+        class="ml-2"
+        style="position: relative; top: -20px"
+        mat-flat-button
+        (click)="load('today')"
+      >
+        Cancel
+      </button>
+    </div>
+
+    <button
+      style="margin-left: auto"
+      (click)="openDialog()"
+      mat-flat-button
+      [color]="'primary'"
+    >
+      <mat-icon style="font-size: 20px">settings</mat-icon>&nbsp; Configure
+    </button>
+  </div>
+  <div class="flex flex-wrap w-full">
+    <div
+      *ngIf="showItem['Jobs Added']"
+      class="flex xs:flex-auto gt-xs:w-1/2 gt-md:w-1/4 h-45 p-4 bg-transparent"
+    >
+      <div
+        class="flex flex-col flex-auto p-3 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <div
+              class="text-4xl leading-tight"
+              style="color: #5f5555; font-weight: bold"
+            >
+              {{ afterStat.addedJob || 0 }}
+              <span
+                style="font-size: 12px"
+                [style.color]="
+                  afterStat.addedJob > beforeStat.addedJob ? 'green' : '#f34f4f'
+                "
+              >
+                {{
+                  statCalculation(afterStat.addedJob, beforeStat.addedJob)
+                }}</span
+              >
+            </div>
+            <div class="font-semibold">Jobs Added</div>
+            <div
+              (click)="goto('jobadded', afterStat.addedJob)"
+              class="link mt-1"
+            >
+              Job List<span
+                style="
+                  font-size: 12px;
+                  position: relative;
+                  top: -1px;
+                  margin-right: 5px;
+                "
+              >
+                ❯</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Jobs With RPA']"
+      class="flex xs:flex-auto gt-xs:w-1/2 gt-md:w-1/4 h-45 p-4 bg-transparent"
+    >
+      <div
+        class="flex flex-col flex-auto p-3 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <div
+              class="text-4xl leading-tight"
+              style="color: #5f5555; font-weight: bold"
+            >
+              {{ afterStat.rpaDone || 0 }}
+              <span
+                style="font-size: 12px"
+                [style.color]="
+                  afterStat.rpaDone > beforeStat.rpaDone ? 'green' : '#f34f4f'
+                "
+              >
+                {{
+                  statCalculation(afterStat.rpaDone, beforeStat.rpaDone)
+                }}</span
+              >
+            </div>
+            <div class="font-semibold">Jobs Successfully with RPA</div>
+            <div
+              (click)="goto('jobsuccess', afterStat.rpaDone)"
+              (click)="goto('jobsuccessrp', afterStat.rpaDone)"
+              class="link mt-1"
+            >
+              In Progress List<span
+                style="
+                  font-size: 12px;
+                  position: relative;
+                  top: -1px;
+                  margin-right: 5px;
+                "
+              >
+                ❯</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Jobs Failed']"
+      class="flex xs:flex-auto gt-xs:w-1/2 gt-md:w-1/4 h-45 p-4 bg-transparent"
+    >
+      <div
+        class="flex flex-col flex-auto p-3 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <div
+              class="text-4xl leading-tight"
+              style="color: #5f5555; font-weight: bold"
+            >
+              {{ afterStat.failedJob || 0 }}
+              <span
+                style="font-size: 12px"
+                [style.color]="
+                  afterStat.failedJob > beforeStat.failedJob
+                    ? 'green'
+                    : '#f34f4f'
+                "
+              >
+                {{
+                  statCalculation(afterStat.failedJob, beforeStat.failedJob)
+                }}</span
+              >
+            </div>
+            <div class="font-semibold">Jobs Failed</div>
+            <div
+              (click)="goto('jobfailed', afterStat.failedJob)"
+              class="link mt-1"
+            >
+              Complete jobs<span
+                style="
+                  font-size: 12px;
+                  position: relative;
+                  top: -1px;
+                  margin-right: 5px;
+                "
+              >
+                ❯</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Video Resume Pending']"
+      class="flex xs:flex-auto gt-xs:w-1/2 gt-md:w-1/4 h-45 p-4 bg-transparent"
+    >
+      <div
+        class="flex flex-col flex-auto p-3 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <div
+              class="text-4xl leading-tight"
+              style="color: #5f5555; font-weight: bold"
+            >
+              {{ afterStat.videoUploadPending || 0 }}
+              <span
+                style="font-size: 12px"
+                [style.color]="
+                  afterStat.videoUploadPending > beforeStat.videoUploadPending
+                    ? 'green'
+                    : '#f34f4f'
+                "
+                >{{
+                  statCalculation(
+                    afterStat.videoUploadPending,
+                    beforeStat.videoUploadPending
+                  )
+                }}</span
+              >
+            </div>
+            <div class="font-semibold">Video Resume Pending</div>
+            <div
+              (click)="goto('vrp', afterStat.videoUploadPending)"
+              class="link mt-1"
+            >
+              Pending list<span
+                style="
+                  font-size: 12px;
+                  position: relative;
+                  top: -1px;
+                  margin-right: 5px;
+                "
+              >
+                ❯</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Jobs Pending']"
+      class="flex xs:flex-auto gt-xs:w-1/2 gt-md:w-1/4 h-45 p-4 bg-transparent"
+    >
+      <div
+        class="flex flex-col flex-auto p-3 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <div
+              class="text-4xl leading-tight"
+              style="color: #5f5555; font-weight: bold"
+            >
+              {{ afterStat.pendingJob || 0 }}
+              <span
+                style="font-size: 12px"
+                [style.color]="
+                  afterStat.pendingJob > beforeStat.pendingJob
+                    ? 'green'
+                    : '#f34f4f'
+                "
+              >
+                {{
+                  statCalculation(afterStat.pendingJob, beforeStat.pendingJob)
+                }}</span
+              >
+            </div>
+            <div class="font-semibold">Jobs Pending</div>
+            <div
+              (click)="goto('jobpending', afterStat.pendingJob)"
+              class="link mt-1"
+            >
+              Talent list<span
+                style="
+                  font-size: 12px;
+                  position: relative;
+                  top: -1px;
+                  margin-right: 5px;
+                "
+              >
+                ❯</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Talents Request']"
+      class="flex xs:flex-auto gt-xs:w-1/2 gt-md:w-1/4 h-45 p-4 bg-transparent"
+    >
+      <div
+        class="flex flex-col flex-auto p-3 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <div
+              class="text-4xl leading-tight"
+              style="color: #5f5555; font-weight: bold"
+            >
+              {{ afterStat.talentRequest || 0 }}
+              <span
+                style="font-size: 12px"
+                [style.color]="
+                  afterStat.talentRequest > beforeStat.talentRequest
+                    ? 'green'
+                    : '#f34f4f'
+                "
+                >{{
+                  statCalculation(
+                    afterStat.talentRequest,
+                    beforeStat.talentRequest
+                  )
+                }}</span
+              >
+            </div>
+            <div class="font-semibold">Talents Request</div>
+            <div class="link mt-1">
+              Company list<span
+                style="
+                  font-size: 12px;
+                  position: relative;
+                  top: -1px;
+                  margin-right: 5px;
+                "
+              >
+                ❯</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Talent Found']"
+      class="flex xs:flex-auto gt-xs:w-1/2 gt-md:w-1/4 h-45 p-4 bg-transparent"
+    >
+      <div
+        class="flex flex-col flex-auto p-3 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <div
+              class="text-4xl leading-tight"
+              style="color: #5f5555; font-weight: bold"
+            >
+              {{ afterStat.talentFound || 0 }}
+              <span
+                style="font-size: 12px"
+                [style.color]="
+                  afterStat.talentFound > beforeStat.talentFound
+                    ? 'green'
+                    : '#f34f4f'
+                "
+              >
+                {{
+                  statCalculation(afterStat.talentFound, beforeStat.talentFound)
+                }}</span
+              >
+            </div>
+            <div class="font-semibold">Talent Found</div>
+            <div
+              (click)="goto('talentfound', afterStat.talentFound)"
+              class="link mt-1"
+            >
+              Contact list<span
+                style="
+                  font-size: 12px;
+                  position: relative;
+                  top: -1px;
+                  margin-right: 5px;
+                "
+              >
+                ❯</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Submission Result']"
+      class="flex xs:flex-auto gt-xs:w-1/2 gt-md:w-1/4 h-45 p-4 bg-transparent"
+    >
+      <div
+        class="flex flex-col flex-auto p-3 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <div
+              class="text-4xl leading-tight"
+              style="color: #5f5555; font-weight: bold"
+            >
+              {{ afterStat.submission || 0 }}
+              <span
+                style="font-size: 12px"
+                [style.color]="
+                  afterStat.submission > beforeStat.submission
+                    ? 'green'
+                    : '#f34f4f'
+                "
+              >
+                {{
+                  statCalculation(afterStat.submission, beforeStat.submission)
+                }}</span
+              >
+            </div>
+            <div class="font-semibold">Submission Result</div>
+            <div
+              (click)="goto('submitted', afterStat.submission)"
+              class="link mt-1"
+            >
+              See more<span
+                style="
+                  font-size: 12px;
+                  position: relative;
+                  top: -1px;
+                  margin-right: 5px;
+                "
+              >
+                ❯</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Right To Represent Received']"
+      class="flex xs:flex-auto gt-xs:w-1/2 gt-md:w-1/4 h-45 p-4 bg-transparent"
+    >
+      <div
+        class="flex flex-col flex-auto p-3 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <div
+              class="text-4xl leading-tight"
+              style="color: #5f5555; font-weight: bold"
+            >
+              {{ afterStat.rightToRepresentDone || 0 }}
+              <span
+                style="font-size: 12px"
+                [style.color]="
+                  afterStat.rightToRepresentDone >
+                  beforeStat.rightToRepresentDone
+                    ? 'green'
+                    : '#f34f4f'
+                "
+              >
+                {{
+                  statCalculation(
+                    afterStat.rightToRepresentDone,
+                    beforeStat.rightToRepresentDone
+                  )
+                }}</span
+              >
+            </div>
+            <div class="font-semibold">Right To Represent Received</div>
+            <div
+              (click)="goto('rrr', afterStat.rightToRepresentDone)"
+              class="link mt-1"
+            >
+              In Progress List<span
+                style="
+                  font-size: 12px;
+                  position: relative;
+                  top: -1px;
+                  margin-right: 5px;
+                "
+              >
+                ❯</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Right To Represent Pending']"
+      class="flex xs:flex-auto gt-xs:w-1/2 gt-md:w-1/4 h-45 p-4 bg-transparent"
+    >
+      <div
+        class="flex flex-col flex-auto p-3 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <div
+              class="text-4xl leading-tight"
+              style="color: #5f5555; font-weight: bold"
+            >
+              {{ afterStat.rightToRepresentPending || 0 }}
+              <span
+                style="font-size: 12px"
+                [style.color]="
+                  afterStat.rightToRepresentPending >
+                  beforeStat.rightToRepresentPending
+                    ? 'green'
+                    : '#f34f4f'
+                "
+              >
+                {{
+                  statCalculation(
+                    afterStat.rightToRepresentPending,
+                    beforeStat.rightToRepresentPending
+                  )
+                }}</span
+              >
+            </div>
+            <div class="font-semibold">Right To Represent Pending</div>
+            <div
+              (click)="goto('prp', afterStat.rightToRepresentPending)"
+              class="link mt-1"
+            >
+              In Progress List<span
+                style="
+                  font-size: 12px;
+                  position: relative;
+                  top: -1px;
+                  margin-right: 5px;
+                "
+              >
+                ❯</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Video Resumes Received']"
+      class="flex xs:flex-auto gt-xs:w-1/2 gt-md:w-1/4 h-45 p-4 bg-transparent"
+    >
+      <div
+        class="flex flex-col flex-auto p-3 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <div
+              class="text-4xl leading-tight"
+              style="color: #5f5555; font-weight: bold"
+            >
+              {{ afterStat.videoUploadReceived || 0 }}
+              <span
+                style="font-size: 12px"
+                [style.color]="
+                  afterStat.videoUploadReceived > beforeStat.videoUploadReceived
+                    ? 'green'
+                    : '#f34f4f'
+                "
+              >
+                {{
+                  statCalculation(
+                    afterStat.videoUploadReceived,
+                    beforeStat.videoUploadReceived
+                  )
+                }}</span
+              >
+            </div>
+            <div class="font-semibold">Video Resumes Received</div>
+            <div
+              (click)="goto('vrr', afterStat.videoUploadReceived)"
+              class="link mt-1"
+            >
+              Video resume<span
+                style="
+                  font-size: 12px;
+                  position: relative;
+                  top: -1px;
+                  margin-right: 5px;
+                "
+              >
+                ❯</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Talents Qualified']"
+      class="flex xs:flex-auto gt-xs:w-1/2 gt-md:w-1/4 h-45 p-4 bg-transparent"
+    >
+      <div
+        class="flex flex-col flex-auto p-3 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <div
+              class="text-4xl leading-tight"
+              style="color: #5f5555; font-weight: bold"
+            >
+              {{ afterStat.qualified || 0 }}
+              <span
+                style="font-size: 12px"
+                [style.color]="
+                  afterStat.qualified > beforeStat.qualified
+                    ? 'green'
+                    : '#f34f4f'
+                "
+              >
+                {{
+                  statCalculation(afterStat.qualified, beforeStat.qualified)
+                }}</span
+              >
+            </div>
+            <div class="font-semibold">Talents Qualified</div>
+            <div
+              (click)="goto('qualified', afterStat.qualified)"
+              class="link mt-1"
+            >
+              Contact list<span
+                style="
+                  font-size: 12px;
+                  position: relative;
+                  top: -1px;
+                  margin-right: 5px;
+                "
+              >
+                ❯</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Talent Submitted']"
+      class="flex xs:flex-auto gt-xs:w-1/2 gt-md:w-1/4 h-45 p-4 bg-transparent"
+    >
+      <div
+        class="flex flex-col flex-auto p-4 pb-3 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <div
+              class="text-4xl leading-tight"
+              style="color: #5f5555; font-weight: bold"
+            >
+              {{ afterStat.submission || 0 }}
+              <span
+                style="font-size: 12px"
+                [style.color]="
+                  afterStat.submission > beforeStat.submission
+                    ? 'green'
+                    : '#f34f4f'
+                "
+                >{{
+                  statCalculation(afterStat.submission, beforeStat.submission)
+                }}</span
+              >
+            </div>
+            <div class="font-semibold">Talent Submitted</div>
+            <div
+              (click)="goto('submitted', afterStat.submission)"
+              class="link mt-1"
+            >
+              Company list<span
+                style="
+                  font-size: 12px;
+                  position: relative;
+                  top: -1px;
+                  margin-right: 5px;
+                "
+              >
+                ❯</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Submission Details']"
+      class="flex xs:flex-auto gt-xs:w-1/2 gt-md:w-1/4 h-45 p-4 bg-transparent"
+    >
+      <div
+        class="flex flex-col flex-auto p-3 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <div
+              class="text-4xl leading-tight"
+              style="color: #5f5555; font-weight: bold"
+            >
+              {{ afterStat.submission || 0 }}
+              <span
+                style="font-size: 12px"
+                [style.color]="
+                  afterStat.submission > beforeStat.submission
+                    ? 'green'
+                    : '#f34f4f'
+                "
+                >{{
+                  statCalculation(afterStat.submission, beforeStat.submission)
+                }}</span
+              >
+            </div>
+            <div class="font-semibold">Submission Details</div>
+            <div
+              (click)="goto('submitted', afterStat.submission)"
+              class="link mt-1"
+            >
+              Talent list<span
+                style="
+                  font-size: 12px;
+                  position: relative;
+                  top: -1px;
+                  margin-right: 5px;
+                "
+              >
+                ❯</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Horizontal bar Chart -->
+
+  <div class="flex flex-wrap w-full">
+    <div
+      *ngIf="showItem['Job By Location']"
+      class="flex sx:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <!-- class="flex xs:flex-auto gt-xs:w-1/2 gt-md:w-1/4   h-105 p-4 bg-transparent" -->
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <!-- <div class=" flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden ">
+                  <div class="flex items-center justify-between "> -->
+          <div class="font-bold text-3x flex-auto">Job By Location</div>
+          <!-- <div class="flex-auto ">
+                          <mat-form-field style="float: right;">
+                              <mat-select [(ngModel)]="selectedYear.jobbyloc " (ngModelChange)="getChart( 'jobbyloc') ">
+                                  <mat-option *ngFor="let y of yearList " [value]="y ">
+                                      {{y}}
+                                  </mat-option>
+                              </mat-select>
+                          </mat-form-field>
+                      </div> -->
+        </div>
+        <div
+          *ngIf="locationWiseJobChartloading; else locationWiseJobChartcontent"
+        >
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #locationWiseJobChartcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [plotOptions]="locationWiseJobChart.plotOptions"
+              [colors]="['#272457']"
+              [chart]="locationWiseJobChart.chart"
+              [fill]="locationWiseJobChart.fill"
+              [series]="locationWiseJobChart.series"
+              [stroke]="locationWiseJobChart.stroke"
+              [tooltip]="locationWiseJobChart.tooltip"
+              [xaxis]="locationWiseJobChart.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Job By Experience']"
+      class="flex sx:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="font-bold text-3x flex-auto">Job By Experience</div>
+        </div>
+        <div
+          *ngIf="
+            experienceWiseJobChartloading;
+            else experienceWiseJobChartcontent
+          "
+        >
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #experienceWiseJobChartcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [plotOptions]="experienceWiseJobChart.plotOptions"
+              [colors]="['#272457']"
+              [chart]="experienceWiseJobChart.chart"
+              [fill]="experienceWiseJobChart.fill"
+              [series]="experienceWiseJobChart.series"
+              [stroke]="experienceWiseJobChart.stroke"
+              [tooltip]="experienceWiseJobChart.tooltip"
+              [xaxis]="experienceWiseJobChart.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Job By Industries']"
+      class="flex sx:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="font-bold text-3x flex-auto">Job By Industries</div>
+        </div>
+        <div
+          *ngIf="industryWiseJobChartloading; else industryWiseJobChartcontent"
+        >
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #industryWiseJobChartcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [plotOptions]="industryWiseJobChart.plotOptions"
+              [colors]="['#272457']"
+              [chart]="industryWiseJobChart.chart"
+              [fill]="industryWiseJobChart.fill"
+              [series]="industryWiseJobChart.series"
+              [stroke]="industryWiseJobChart.stroke"
+              [tooltip]="industryWiseJobChart.tooltip"
+              [xaxis]="industryWiseJobChart.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Jobs Added v/s Submission Chart']"
+      class="flex xs:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <!-- <div class="flex items-center justify-between "> -->
+        <div class="flex">
+          <div class="font-bold text-3x">Jobs Added v/s Submission</div>
+        </div>
+        <div
+          *ngIf="
+            jobAddedVsSunmissionChartloading;
+            else jobAddedVsSunmissionChartcontent
+          "
+        >
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #jobAddedVsSunmissionChartcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [plotOptions]="jobAddedVsSunmissionChart.plotOptions"
+              [chart]="jobAddedVsSunmissionChart.chart"
+              [colors]="['#272457', '#ff7448']"
+              [fill]="jobAddedVsSunmissionChart.fill"
+              [series]="jobAddedVsSunmissionChart.series"
+              [stroke]="jobAddedVsSunmissionChart.stroke"
+              [tooltip]="jobAddedVsSunmissionChart.tooltip"
+              [xaxis]="jobAddedVsSunmissionChart.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Jobs Added v/s Skills Chart']"
+      class="flex xs:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <!-- <div class="flex items-center justify-between "> -->
+        <div class="flex">
+          <div class="font-bold text-3x">Jobs Added v/s Skills</div>
+        </div>
+        <div *ngIf="jobPrimarySkillsloading; else jobPrimarySkillscontent">
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #jobPrimarySkillscontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [plotOptions]="jobPrimarySkills.plotOptions"
+              [chart]="jobPrimarySkills.chart"
+              [colors]="['#272457', '#ff7448']"
+              [fill]="jobPrimarySkills.fill"
+              [series]="jobPrimarySkills.series"
+              [stroke]="jobPrimarySkills.stroke"
+              [tooltip]="jobPrimarySkills.tooltip"
+              [xaxis]="jobPrimarySkills.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['AI Recruiter Chart']"
+      class="flex xs:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <!-- <div class="flex items-center justify-between "> -->
+        <div class="flex">
+          <div class="font-bold text-3x">AI Recruiter Performance</div>
+        </div>
+        <div *ngIf="addedJobChartloading; else addedJobChartcontent">
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #addedJobChartcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [dataLabels]="addedJobChart.dataLabels"
+              [chart]="addedJobChart.chart"
+              [colors]="addedJobChart.colors"
+              [fill]="addedJobChart.fill"
+              [series]="addedJobChart.series"
+              [stroke]="addedJobChart.stroke"
+              [tooltip]="addedJobChart.tooltip"
+              [xaxis]="addedJobChart.xaxis"
+            >
+            </apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap w-full">
+    <!-- Talents Requested VS Talents Acquired  chart -->
+    <div
+      *ngIf="showItem['Talents Chart']"
+      class="flex sx:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-5 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <!-- <div class="flex items-center justify-between "> -->
+        <div class="flex">
+          <div class="font-bold text-3x">Talents</div>
+        </div>
+        <div *ngIf="talentChartloading; else talentChartcontent">
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #talentChartcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [dataLabels]="talentChart.dataLabels"
+              [chart]="talentChart.chart"
+              [series]="talentChart.series"
+              [stroke]="talentChart.stroke"
+              [tooltip]="talentChart.tooltip"
+              [xaxis]="talentChart.xaxis"
+            >
+            </apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Talent By Location']"
+      class="flex sx:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="font-bold text-3x flex-auto">Talent By Location</div>
+        </div>
+        <div
+          *ngIf="
+            locationWiseTalentChartloading;
+            else locationWiseTalentChartcontent
+          "
+        >
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #locationWiseTalentChartcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [plotOptions]="locationWiseTalentChart.plotOptions"
+              [colors]="['#272457']"
+              [chart]="locationWiseTalentChart.chart"
+              [fill]="locationWiseTalentChart.fill"
+              [series]="locationWiseTalentChart.series"
+              [stroke]="locationWiseTalentChart.stroke"
+              [tooltip]="locationWiseTalentChart.tooltip"
+              [xaxis]="locationWiseTalentChart.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Talent By Experience']"
+      class="flex sx:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="font-bold text-3x flex-auto">Talent By Experience</div>
+        </div>
+        <div
+          *ngIf="
+            experienceWiseTalentChartloading;
+            else experienceWiseTalentChartcontent
+          "
+        >
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #experienceWiseTalentChartcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [plotOptions]="experienceWiseTalentChart.plotOptions"
+              [colors]="['#272457']"
+              [chart]="experienceWiseTalentChart.chart"
+              [fill]="experienceWiseTalentChart.fill"
+              [series]="experienceWiseTalentChart.series"
+              [stroke]="experienceWiseTalentChart.stroke"
+              [tooltip]="experienceWiseTalentChart.tooltip"
+              [xaxis]="experienceWiseTalentChart.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Talent By Industries']"
+      class="flex sx:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <div class="font-bold text-3x flex-auto">Talent By Industries</div>
+        </div>
+        <div
+          *ngIf="
+            industryWiseTalentChartloading;
+            else industryWiseTalentChartcontent
+          "
+        >
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #industryWiseTalentChartcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [plotOptions]="industryWiseTalentChart.plotOptions"
+              [colors]="['#272457']"
+              [chart]="industryWiseTalentChart.chart"
+              [fill]="industryWiseTalentChart.fill"
+              [series]="industryWiseTalentChart.series"
+              [stroke]="industryWiseTalentChart.stroke"
+              [tooltip]="industryWiseTalentChart.tooltip"
+              [xaxis]="industryWiseTalentChart.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap w-full">
+    <div
+      *ngIf="showItem['Team - Jobs Added vs Jobs Submitted']"
+      class="flex xs:flex-auto w-1/2 min-w-80 h-55 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <!-- <div class="flex items-center justify-between "> -->
+        <div class="flex">
+          <div class="font-bold text-3x">
+            Teams - Jobs Added vs Jobs Submitted
+          </div>
+        </div>
+        <div *ngIf="teamWiseJobChartloading; else teamWiseJobChartcontent">
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #teamWiseJobChartcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [chart]="teamWiseJobChart.chart"
+              [colors]="['#272457', '#ff7448']"
+              [series]="teamWiseJobChart.series"
+              [stroke]="teamWiseJobChart.stroke"
+              [tooltip]="teamWiseJobChart.tooltip"
+              [xaxis]="teamWiseJobChart.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Team - Talent Extracted vs Talents ClicktoCall']"
+      class="flex xs:flex-auto w-1/2 min-w-80 h-55 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <!-- <div class="flex items-center justify-between "> -->
+        <div class="flex">
+          <div class="font-bold text-3x">
+            Teams - Talent Extracted vs Talents ClicktoCall
+          </div>
+        </div>
+        <div
+          *ngIf="
+            teamWiseTalentExtractedVsClickToCallloading;
+            else teamWiseTalentExtractedVsClickToCallcontent
+          "
+        >
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #teamWiseTalentExtractedVsClickToCallcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [chart]="teamWiseTalentExtractedVsClickToCall.chart"
+              [colors]="['#272457', '#ff7448']"
+              [series]="teamWiseTalentExtractedVsClickToCall.series"
+              [stroke]="teamWiseTalentExtractedVsClickToCall.stroke"
+              [tooltip]="teamWiseTalentExtractedVsClickToCall.tooltip"
+              [xaxis]="teamWiseTalentExtractedVsClickToCall.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Team -Talent Extracted vs Talents Right to represent']"
+      class="flex xs:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <!-- <div class="flex items-center justify-between "> -->
+        <div class="flex">
+          <div class="font-bold text-3x">
+            Teams - Talent Extracted vs Talents Right to represent
+          </div>
+        </div>
+        <div
+          *ngIf="
+            teamWiseTalentExtractedVsRightToRepresentChartloading;
+            else teamWiseTalentExtractedVsRightToRepresentChartcontent
+          "
+        >
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #teamWiseTalentExtractedVsRightToRepresentChartcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [chart]="teamWiseTalentExtractedVsRightToRepresentChart.chart"
+              [colors]="['#272457', '#ff7448']"
+              [series]="teamWiseTalentExtractedVsRightToRepresentChart.series"
+              [stroke]="teamWiseTalentExtractedVsRightToRepresentChart.stroke"
+              [tooltip]="teamWiseTalentExtractedVsRightToRepresentChart.tooltip"
+              [xaxis]="teamWiseTalentExtractedVsRightToRepresentChart.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Team - Talent Extracted vs Talents Video Uploaded']"
+      class="flex xs:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <!-- <div class="flex items-center justify-between "> -->
+        <div class="flex">
+          <div class="font-bold text-3x">
+            Teams - Talent Extracted vs Talents Video Uploaded
+          </div>
+        </div>
+        <div
+          *ngIf="
+            teamWiseTalentExtractedVsVideoUploadedloading;
+            else teamWiseTalentExtractedVsVideoUploadedcontent
+          "
+        >
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #teamWiseTalentExtractedVsVideoUploadedcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [chart]="teamWiseTalentExtractedVsVideoUploaded.chart"
+              [colors]="['#272457', '#ff7448']"
+              [series]="teamWiseTalentExtractedVsVideoUploaded.series"
+              [stroke]="teamWiseTalentExtractedVsVideoUploaded.stroke"
+              [tooltip]="teamWiseTalentExtractedVsVideoUploaded.tooltip"
+              [xaxis]="teamWiseTalentExtractedVsVideoUploaded.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Team - Talent Extracted vs Talents Qualified']"
+      class="flex xs:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <!-- <div class="flex items-center justify-between "> -->
+        <div class="flex">
+          <div class="font-bold text-3x">
+            Teams - Talent Extracted vs Talents Qualified
+          </div>
+        </div>
+        <div
+          *ngIf="
+            teamWiseTalentExtractedVsTalentsQualifiedloading;
+            else teamWiseTalentExtractedVsTalentsQualifiedcontent
+          "
+        >
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #teamWiseTalentExtractedVsTalentsQualifiedcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [chart]="teamWiseTalentExtractedVsTalentsQualified.chart"
+              [colors]="['#272457', '#ff7448']"
+              [series]="teamWiseTalentExtractedVsTalentsQualified.series"
+              [stroke]="teamWiseTalentExtractedVsTalentsQualified.stroke"
+              [tooltip]="teamWiseTalentExtractedVsTalentsQualified.tooltip"
+              [xaxis]="teamWiseTalentExtractedVsTalentsQualified.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Submission Chart']"
+      class="flex sx:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <div class="flex items-center justify-between">
+          <!-- <div class="flex "> -->
+          <div class="font-bold text-3x flex-auto">Submissions</div>
+        </div>
+        <div *ngIf="submissionChartloading; else submissionChartcontent">
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #submissionChartcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [dataLabels]="submissionChart.dataLabels"
+              [chart]="submissionChart.chart"
+              [colors]="submissionChart.colors"
+              [fill]="submissionChart.fill"
+              [series]="submissionChart.series"
+              [stroke]="submissionChart.stroke"
+              [tooltip]="submissionChart.tooltip"
+              [xaxis]="submissionChart.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap w-full">
+    <div
+      *ngIf="showItem['Client - Jobs added vs Jobs Submitted']"
+      class="flex xs:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <!-- <div class="flex items-center justify-between "> -->
+        <div class="flex">
+          <div class="font-bold text-3x">
+            Client - Jobs Added vs Jobs Submitted
+          </div>
+        </div>
+        <div *ngIf="clientWiseJobChartloading; else clientWiseJobChartcontent">
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #clientWiseJobChartcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [chart]="clientWiseJobChart.chart"
+              [colors]="['#272457', '#ff7448']"
+              [series]="clientWiseJobChart.series"
+              [stroke]="clientWiseJobChart.stroke"
+              [tooltip]="clientWiseJobChart.tooltip"
+              [xaxis]="clientWiseJobChart.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Client - Talent Extracted vs Talents CLicktoCall']"
+      class="flex xs:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <!-- <div class="flex items-center justify-between "> -->
+        <div class="flex">
+          <div class="font-bold text-3x">
+            Client - Talent Extracted vs Talents ClicktoCall
+          </div>
+        </div>
+        <div
+          *ngIf="
+            clientWiseTalentExtractedVsClickToCallloading;
+            else clientWiseTalentExtractedVsClickToCallcontent
+          "
+        >
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #clientWiseTalentExtractedVsClickToCallcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [chart]="clientWiseTalentExtractedVsClickToCall.chart"
+              [colors]="['#272457', '#ff7448']"
+              [series]="clientWiseTalentExtractedVsClickToCall.series"
+              [stroke]="clientWiseTalentExtractedVsClickToCall.stroke"
+              [tooltip]="clientWiseTalentExtractedVsClickToCall.tooltip"
+              [xaxis]="clientWiseTalentExtractedVsClickToCall.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="
+        showItem['Client - Talent Extracted vs Talents Right to represent']
+      "
+      class="flex xs:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <!-- <div class="flex items-center justify-between "> -->
+        <div class="flex">
+          <div class="font-bold text-3x">
+            Client - Talent Extracted vs Talents Right to represent
+          </div>
+        </div>
+        <div
+          *ngIf="
+            clientWiseTalentExtractedVsRightToRepresentChartloading;
+            else clientWiseTalentExtractedVsRightToRepresentChartcontent
+          "
+        >
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #clientWiseTalentExtractedVsRightToRepresentChartcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [chart]="clientWiseTalentExtractedVsRightToRepresentChart.chart"
+              [colors]="['#272457', '#ff7448']"
+              [series]="clientWiseTalentExtractedVsRightToRepresentChart.series"
+              [stroke]="clientWiseTalentExtractedVsRightToRepresentChart.stroke"
+              [tooltip]="
+                clientWiseTalentExtractedVsRightToRepresentChart.tooltip
+              "
+              [xaxis]="clientWiseTalentExtractedVsRightToRepresentChart.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Client - Talent Extracted vs Talents Video Uploaded']"
+      class="flex xs:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <!-- <div class="flex items-center justify-between "> -->
+        <div class="flex">
+          <div class="font-bold text-3x">
+            Client - Talent Extracted vs Talents Video Uploaded
+          </div>
+        </div>
+        <div
+          *ngIf="
+            clientWiseTalentExtractedVsVideoUploadedloading;
+            else clientWiseTalentExtractedVsVideoUploadedcontent
+          "
+        >
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #clientWiseTalentExtractedVsVideoUploadedcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [chart]="clientWiseTalentExtractedVsVideoUploaded.chart"
+              [colors]="['#272457', '#ff7448']"
+              [series]="clientWiseTalentExtractedVsVideoUploaded.series"
+              [stroke]="clientWiseTalentExtractedVsVideoUploaded.stroke"
+              [tooltip]="clientWiseTalentExtractedVsVideoUploaded.tooltip"
+              [xaxis]="clientWiseTalentExtractedVsVideoUploaded.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showItem['Client - Talent Extracted vs Talents Qualified']"
+      class="flex xs:flex-auto w-1/2 min-w-80 h-45 p-4"
+    >
+      <div
+        class="flex flex-col flex-auto p-6 pb-4 bg-card shadow-md rounded overflow-hidden"
+      >
+        <!-- <div class="flex items-center justify-between "> -->
+        <div class="flex">
+          <div class="font-bold text-3x">
+            Client - Talent Extracted vs Talents Qualified
+          </div>
+        </div>
+        <div
+          *ngIf="
+            clientWiseTalentExtractedVsTalentsQualifiedloading;
+            else clientWiseTalentExtractedVsTalentsQualifiedcontent
+          "
+        >
+          <div class="spinner__loading">
+            <div>
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <ng-template #clientWiseTalentExtractedVsTalentsQualifiedcontent>
+          <div class="flex items-end h-full w-full">
+            <apx-chart
+              class="flex-auto w-full h-full"
+              [chart]="clientWiseTalentExtractedVsTalentsQualified.chart"
+              [colors]="['#272457', '#ff7448']"
+              [series]="clientWiseTalentExtractedVsTalentsQualified.series"
+              [stroke]="clientWiseTalentExtractedVsTalentsQualified.stroke"
+              [tooltip]="clientWiseTalentExtractedVsTalentsQualified.tooltip"
+              [xaxis]="clientWiseTalentExtractedVsTalentsQualified.xaxis"
+            ></apx-chart>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- bar chart -->
+  </div>
+
+  <!-- table -->
+
+  <!-- <div class="flex w-full ">
+          <table mat-table [dataSource]="rows" style="width: 100%; ">
+  
+              <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef> Talent Status </th>
+                  <td mat-cell *matCellDef="let element "> {{element.name}} </td>
+              </ng-container>
+  
+              <ng-container matColumnDef="value">
+                  <th mat-header-cell *matHeaderCellDef>Overall Talent({{stat.totalTalents||0}})</th>
+                  <td mat-cell *matCellDef="let element "> {{element.value||0}} </td>
+              </ng-container>
+  
+  
+              <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                  <td mat-cell *matCellDef="let element ">
+                      <button (click)="goto(element.name) " style="color: blue; " class="add-section " mat-flat-button>
+  
+                          Details
+                      </button>
+                  </td>
+              </ng-container>
+  
+              <tr mat-header-row *matHeaderRowDef="[ 'name', 'value', 'action'] "></tr>
+              <tr mat-row *matRowDef="let row; columns: [ 'name', 'value', 'action']; "></tr>
+          </table>
+      </div> -->
+</div>
+<br />

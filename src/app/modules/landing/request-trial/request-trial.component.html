@@ -1,0 +1,179 @@
+<div class="container border">
+  <header>
+    <div class="container-fluid">
+      <div class="row tabview mt-1">
+        <nav class="navbar navbar-light" style="background-color: #1e293b">
+          <!-- <div class="container-fluid "> -->
+          <!-- <div class="row"> -->
+          <div class="col-md-5 offset-md-1">
+            <a routerLink="../home"
+              ><img
+                src="../assets/images/logo/img.png"
+                alt=""
+                width="210"
+                height="54"
+            /></a>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-4"></div>
+              <div class="col-md-8">
+                <form class="d-flex m-4">
+                  <!-- <a  class="button1 mx-5" routerLink="/sign-in"><span class="Add1"> Login </span></a> -->
+                  <button
+                    class="btn btn-light btn-sm sec-btn mr-3"
+                    routerLink="/sign-in"
+                    role="button"
+                  >
+                    Login
+                  </button>
+                  <button
+                    class="btn btn-primary btn-sm sec-btn"
+                    routerLink="../home/jobapply"
+                    role="button"
+                  >
+                    Apply for jobs
+                  </button>
+                  <!-- <a class="button2" routerLink="/requestTrial">
+            <span class="Add2" > Request a Trial </span>ss
+          </a> -->
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- </div> -->
+          <!-- </div> -->
+        </nav>
+      </div>
+    </div>
+  </header>
+  <div class="row">
+    <div class="col-md-6 my-2">
+      <img src="assets/images/desk01.jpg" class="img-fluid h-100" alt="..." />
+    </div>
+    <div class="col-md-6">
+      <!-- Default form contact -->
+      <form
+        class="text-center border border-light p-5 needs-validation"
+        [formGroup]="contactForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <p class="h4 mb-4">Ready to Get Started?</p>
+
+        <!-- Name -->
+        <input
+          type="text"
+          formControlName="req_name"
+          id="defaultContactFormName"
+          mdbInputDirective
+          class="form-control mb-4"
+          placeholder="Name"
+          [(ngModel)]="userDetails.name"
+        />
+
+        <!-- Email -->
+        <input
+          type="email"
+          formControlName="req_email"
+          id="defaultContactFormEmail"
+          mdbInputDirective
+          class="form-control mb-4 email"
+          placeholder="E-mail"
+          [(ngModel)]="userDetails.email"
+        />
+
+        <!-- Phone Number  -->
+        <input
+          type="phone number"
+          formControlName="req_phn"
+          id="defaultContactFormPhoneNumber"
+          mdbInputDirective
+          class="form-control mb-4"
+          placeholder="Mobile Number"
+          type="number"
+          class="form-control"
+          [(ngModel)]="userDetails.mobile"
+        />
+
+        <!-- Subject -->
+        <!-- <label>Subject</label>
+    <select formControlName="contactFormSubjects" class="browser-default custom-select mb-4">
+      <option value="" disabled>Choose option</option>
+      <option value="1" selected>Feedback</option>
+      <option value="2">Report a bug</option>
+      <option value="3">Feature request</option>
+      <option value="4">Feature request</option>
+    </select> -->
+
+        <!-- Message -->
+        <div class="form-group mt-4">
+          <textarea
+            formControlName="req_msg"
+            class="form-control rounded-0"
+            mdbInputDirective
+            id="exampleFormControlTextarea2"
+            rows="3"
+            placeholder="Message"
+            required
+          ></textarea>
+          <!-- <input type="text" class="form-control is-invalid" id="validationError" required> -->
+        </div>
+
+        <!-- Copy -->
+        <!-- <div class="custom-control custom-checkbox mb-4">
+      <input formControlName="contactFormCopy" type="checkbox" class="custom-control-input" id="defaultContactFormCopy">
+      <label class="custom-control-label" for="defaultContactFormCopy">Send me a copy of this message</label>
+    </div> -->
+
+        <!-- Send button -->
+
+        <button
+          mdbBtn
+          color="info"
+          outline="true"
+          block="true"
+          class="btn btn-primary submit-btn z-depth-0 my-4 waves-effect"
+          mdbWavesEffect
+          type="submit"
+        >
+          Submit
+        </button>
+      </form>
+      <!-- Default form contact -->
+    </div>
+  </div>
+
+  <footer
+    class="page-footer font-small mdb-color darken-3 pt-4"
+    style="background-color: #1e293b"
+  >
+    <!-- Footer Elements -->
+    <div class="container">
+      <!--Grid row-->
+      <div class="row d-flex justify-content-center">
+        <!--Grid column-->
+        <div class="col-md-2">
+          <!-- Video -->
+          <div class="embed-responsive embed-responsive-16by9 mb-2">
+            <img
+              src="../../../assets/images/logo/img.png"
+              alt=""
+              width="240"
+              height="70"
+            />
+          </div>
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </div>
+    <!-- Footer Elements -->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-1 mb-2 text-light pr-4">
+      D-108,sector-63,Noida<br />
+      © 2021.All rights reserved
+    </div>
+    <!-- Copyright -->
+  </footer>
+</div>

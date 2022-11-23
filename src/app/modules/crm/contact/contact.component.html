@@ -1,0 +1,113 @@
+<div class="content-layout fullwidth-basic-normal-scroll">
+    <div style="background-color: #E3E8EF;">
+
+        <div class="main">
+
+            <div class="header">
+
+                <div class="title">
+
+                    <h1>Contact</h1>
+
+                    <div class="remaining-tasks-count">
+                        <span>{{rows.length}} Types</span>
+                    </div>
+
+                </div>
+
+                <div class="main-actions">
+                    <span class="search Contacts">
+
+                        <mat-form-field class="treo-mat-dense treo-mat-no-subscript">
+                            <mat-icon matPrefix [svgIcon]="'search'"></mat-icon>
+                            <input matInput [autocomplete]="'off'" [(ngModel)]="filterObj.search"
+                                (ngModelChange)="search()" [placeholder]="'Search Contact'">
+                        </mat-form-field>
+
+                    </span>
+
+                    <button class="add-task" (click)="addEdit('add',{})" mat-flat-button [color]="'primary'">
+                        <mat-icon [svgIcon]="'add'"></mat-icon>
+                        New Contact
+                    </button>
+
+                    <button class="add-section" (click)="export()" mat-flat-button [color]="'primary'">
+                        <mat-icon [svgIcon]="'heroicons_solid:download'"></mat-icon>
+                        Export CSV File
+                    </button>
+
+                    <mat-menu #menu="matMenu">
+                        <p *ngFor="let c of selectedColumn" (click)="$event.stopPropagation()" mat-menu-item>
+                            <input type="checkbox" [(ngModel)]="c.value" style="margin-right: 10px;"> {{c.name}}
+                        </p>
+                        <div mat-menu-item>
+                            <button (click)="updateViewMetadata()" mat-flat-button class="w-full" [color]="'primary'">Save</button>
+                        </div>
+                    </mat-menu>
+
+                </div>
+
+            </div>
+            <!-- <div class="p-4" *ngIf="rows.length>0" style="width: 100%;overflow: auto;"> -->
+            <div class="pr-4 w-full">
+                <button style="float:right;" [color]="'primary'" mat-flat-button type="button" [matMenuTriggerFor]="menu">
+                    <mat-icon style="font-size: 20px;">settings</mat-icon> &nbsp; Settings
+                </button>
+            </div><br>
+            <div style="width:100%;margin-top: 25px;">
+
+
+                <ngx-datatable #myTable class="material" [rows]='rows' [limit]="10" [columnMode]="'force'" [scrollbarH]="true" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'">
+
+                    <ngx-datatable-column name="Name" *ngIf="tableShowColumn['Name']">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.name}}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Email" *ngIf="tableShowColumn['Email']">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.email}}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Company Name" *ngIf="tableShowColumn['Company Name']">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.contactCompanyName}}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="City" *ngIf="tableShowColumn['City']">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.cityName}}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Address" *ngIf="tableShowColumn['Address']">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.address}}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Actions" *ngIf="tableShowColumn.Actions">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <button (click)="addEdit('edit', row)" style="color: blue;" class="add-section" mat-flat-button>
+                                <mat-icon svgIcon="edit"></mat-icon> &nbsp;
+                                Edit
+                            </button>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <!-- <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false" [canAutoResize]="false">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                        <mat-icon style="height: 10px;margin: 0;padding: 0;" [matMenuTriggerFor]="menu" [svgIcon]="'edit'">
+                        </mat-icon>
+                    </ng-template>
+                </ngx-datatable-column> -->
+                </ngx-datatable>
+            </div>
+        </div>
+
+        <!-- </div> -->
+    </div>
+</div>

@@ -1,0 +1,134 @@
+<div class="content-layout fullwidth-basic-normal-scroll">
+    <div class="main">
+
+        <!-- Header -->
+        <div class="header">
+
+            <!-- Title -->
+            <div class="title">
+                <strong class="link" onclick="back()">
+                    <span style="font-size: 12px;position: relative;top: -1px;margin-right: 5px;">❮ </span> Back
+                </strong>
+                <h1>Sign Up New Client</h1>
+            </div>
+
+            <!-- Main actions -->
+            <div class="main-actions">
+
+                <button class="add-task" (click)="gotoClientView()" mat-flat-button>
+                    Cancel
+                </button>
+
+                <!-- Add section button -->
+                <button class="add-task" (click)="submit()" mat-flat-button [color]="'primary'">
+                    <mat-icon [svgIcon]="'save'"></mat-icon>
+                    Save Client
+                </button>
+
+
+            </div>
+
+        </div>
+
+        <div class="m-8">
+            <h3>Contact Details</h3>
+            <div class="flex flex-col mt-8 p-8 pb-0 bg-card shadow rounded overflow-hidden">
+
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Name</mat-label>
+                        <input matNativeControl [(ngModel)]="client.name" [placeholder]="'Contact Name'">
+
+                        <mat-icon matPrefix [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Mobile</mat-label>
+                        <input matNativeControl [(ngModel)]="client.mobile" [placeholder]="'Mobile Phone Number'">
+
+                        <mat-icon matPrefix [svgIcon]="'heroicons_solid:device-mobile'"></mat-icon>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Email</mat-label>
+                        <input [disabled]="client.id" matNativeControl [(ngModel)]="client.email" [placeholder]="'Email Address'">
+
+                        <mat-icon matPrefix [svgIcon]="'email'"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Password</mat-label>
+                        <input [disabled]="client.id" matNativeControl [(ngModel)]="client.password" [placeholder]="'Password'">
+
+                        <mat-icon matPrefix [svgIcon]="'lock'"></mat-icon>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field [floatLabel]="'never'" class="flex-auto gt-xs:pr-3">
+                        <mat-label>Company</mat-label>
+                        <input matInput [(ngModel)]="client.company" [placeholder]="'Company Name'">
+                        <mat-icon matPrefix [svgIcon]="'mat_outline:business'"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3 ">
+                        <mat-label>client Location</mat-label>
+                        <select matNativeControl [(ngModel)]="client.cityid">
+                            <option value="Select"></option>
+                            <option *ngFor="let c of cityList" [value]="c.id">{{c.name}}</option>
+                        </select>
+                        <mat-icon matPrefix [svgIcon]="'mat_outline:location_city'"></mat-icon>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Location</mat-label>
+                        <input matNativeControl [(ngModel)]="client.location"  [placeholder]="'Location'">
+
+                        <mat-icon matPrefix [svgIcon]="'mat_outline:location_searching'"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Address</mat-label>
+                        <input matNativeControl [(ngModel)]="client.address"  [placeholder]="'Address'">
+
+                        <mat-icon matPrefix [svgIcon]="'room'"></mat-icon>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-col gt-xs:flex-row gt-xs:w-1/2">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Pincode</mat-label>
+                        <input matNativeControl [(ngModel)]="client.pincode"  [placeholder]="'Pin Code'">
+
+                        <mat-icon matPrefix [svgIcon]="'mat_outline:push_pin'"></mat-icon>
+                    </mat-form-field>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="header" style="background: transparent !important;">
+            <div class="main-actions">
+
+                <button class="add-task" (click)="gotoClientView()" mat-flat-button>
+                    Cancel
+                </button>
+
+                <!-- Add section button -->
+                <button class="add-task" (click)="submit()" mat-flat-button [color]="'primary'">
+                    <mat-icon [svgIcon]="'save'"></mat-icon>
+                    Save Client
+                </button>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

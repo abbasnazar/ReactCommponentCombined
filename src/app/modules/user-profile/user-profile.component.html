@@ -1,0 +1,59 @@
+<div class="content-layout fullwidth-basic-normal-scroll">
+
+    <treo-card class="auth-card classic">
+
+        <!-- Form container -->
+        <div class="form-container">
+
+            <div class="form">
+
+                <!-- Logo -->
+                <input type="file" id="file" style="display: none;" (change)="upload($event.target.files)">
+                <div class=" avatar " onclick="document.getElementById('file').click()">
+                    <img *ngIf="profileObj.pic" [src]="getProfilePic()">
+                    <mat-icon *ngIf="!profileObj.pic" style="color: lightgray;" [svgIcon]=" 'heroicons_solid:user-circle' ">
+                    </mat-icon>
+                </div>
+
+                <mat-form-field>
+                    <mat-label>Full name</mat-label>
+                    <input id="name " matInput [(ngModel)]="profileObj.name">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Mobile</mat-label>
+                    <input type="number " id="mobile " matInput [(ngModel)]="profileObj.mobile">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Email address</mat-label>
+                    <input id="email " disabled matInput [(ngModel)]="profileObj.email">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>LinkedIn</mat-label>
+                    <input id="linkedin " matInput [(ngModel)]="profileObj.linkedin">
+                </mat-form-field>
+
+                <button style="float: right;" class="submit-button treo-mat-button-large w-1/3" mat-flat-button [color]="'primary'" [disabled]="loader" (click)="save() ">
+                    <span *ngIf="!loader ">
+                        Save
+                    </span>
+                    <mat-progress-spinner *ngIf="loader" [diameter]="24 " [mode]="'indeterminate'">
+                    </mat-progress-spinner>
+                </button>
+
+                <button style="float: right;" class="submit-button treo-mat-button-large w-1/3 ml-6" mat-flat-button [disabled]="loader" (click)="back()">
+
+                    Cancel
+                </button>
+
+                
+
+            </div>
+
+        </div>
+
+    </treo-card>
+
+</div>

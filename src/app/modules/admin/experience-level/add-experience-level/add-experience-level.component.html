@@ -1,0 +1,23 @@
+<h3>{{data.title}} Position Type</h3>
+<div>
+    <mat-form-field class="treo-mat-dense treo-mat-no-subscript">
+        <input matInput type="number" [(ngModel)]="data.from" [placeholder]="'From*'">
+    </mat-form-field><br><br>
+    <mat-form-field class="treo-mat-dense treo-mat-no-subscript">
+        <input matInput type="number" [(ngModel)]="data.till" [placeholder]="'Till*'">
+    </mat-form-field>
+    <br>
+    <div style="margin-top: 20px;">
+        <button *ngIf="data.title=='Update'" class="add-task" (click)="update()" mat-flat-button [color]="'primary'">
+            Update
+        </button>
+        <button *ngIf="data.title=='Add'" class="add-task" (click)="submit()" mat-flat-button [color]="'primary'">
+            Submit
+        </button>
+
+        <!-- Add task button -->
+        <button class="add-section" (click)="closeDialog()" mat-flat-button [color]="'primary'">
+            Close
+        </button>
+    </div>
+</div>

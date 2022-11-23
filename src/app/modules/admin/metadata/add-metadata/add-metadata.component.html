@@ -1,0 +1,67 @@
+<h3>{{data.title}} Metadata</h3>
+<div *ngIf="data.title=='Add' || data.title=='Update'">
+    <mat-form-field class="treo-mat-dense treo-mat-no-subscript">
+        <select matNativeControl [(ngModel)]="data.tablename" class="form-control">
+            <option value="undefined">Select table</option>
+            <option value="jobs">Jobs</option>
+            <option value="Talents">Talents</option>
+            <option value="Company">Company</option>
+            <option value="Contact">Contact</option>
+        </select>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="treo-mat-dense treo-mat-no-subscript">
+        <input matInput [(ngModel)]="data.fieldname" [placeholder]="'fieldname'">
+    </mat-form-field><br>
+    <mat-form-field class="treo-mat-dense treo-mat-no-subscript">
+        <select matNativeControl [(ngModel)]="data.fieldtype" class="form-control">
+            <option value="undefined">Select field type</option>
+            <option *ngFor="let fieldtype of fieldTypeList" value="{{fieldtype}}">{{fieldtype}}</option>
+        </select>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="treo-mat-dense treo-mat-no-subscript">
+        <textarea matInput [(ngModel)]="data.json" cdkTextareaAutosize cdkAutosizeMinRows="4"></textarea>
+    </mat-form-field>
+    <br><br>
+    <mat-radio-group class="flex flex-auto" [(ngModel)]="data.mandatory" [color]="'primary'" [value]="'just-good'">
+        <mat-radio-button class="mr-2" [value]="true">
+            Mandatory
+        </mat-radio-button>
+        <mat-radio-button class="ml-2" [value]="false">
+            Non-Mandatory
+        </mat-radio-button>
+
+    </mat-radio-group>
+    <br>
+
+
+    <div style="margin-top: 20px;">
+        <button *ngIf="data.title=='Update'" class="add-task" (click)="update()" mat-flat-button [color]="'primary'">
+            Update
+        </button>
+        <button *ngIf="data.title=='Add'" class="add-task" (click)="submit()" mat-flat-button [color]="'primary'">
+            Submit
+        </button>
+
+        <!-- Add task button -->
+        <button class="add-section" (click)="closeDialog()" mat-flat-button [color]="'primary'">
+            Close
+        </button>
+    </div>
+</div>
+
+<div *ngIf="data.title=='Confirmation'">
+    <h4>Do you want to {{data.isactive?'deactivate':'activate'}} this metadata?</h4>
+    <div style="margin-top: 20px;">
+
+        <button class="add-task" (click)="activateDeactive()" mat-flat-button [color]="'primary'">
+            Yes
+        </button>
+
+        <!-- Add task button -->
+        <button class="add-section" (click)="closeDialog()" mat-flat-button [color]="'primary'">
+            No
+        </button>
+    </div>
+</div>

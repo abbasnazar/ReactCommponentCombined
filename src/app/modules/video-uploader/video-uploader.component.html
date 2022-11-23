@@ -1,0 +1,58 @@
+<div class="content-layout fullwidth-basic-normal-scroll">
+
+    <treo-card *ngIf="uploadingType != 'error'" class="auth-card classic">
+
+        <!-- Form container -->
+        <div class="form-container">
+
+            <div class="form">
+
+                <!-- Logo -->
+                <div class="logo" style="width: 90%;margin: 0 auto;">
+                    <img src="assets/images/logo/Jobmojo-Logo-Dark-large.png">
+                </div>
+                <input type="file" id="file" style="display: none;" (change)="uploadAndProgress($event.target.files)">
+                <!-- Title -->
+                <!-- <div class="title">Upload Video</div><br> -->
+
+                <div *ngIf="uploadingType == 'file'">
+                    <br>
+                    <br>
+                    <mat-form-field class="w-full">
+                        <mat-label>Upload Video</mat-label>
+                        <input disabled [(ngModel)]="fileName" matInput>
+                        <button mat-icon-button type="button" onclick="document.getElementById('file').click()" matSuffix>
+                            <mat-icon [svgIcon]="'description'"></mat-icon>
+                        </button>
+                    </mat-form-field>
+
+                    <button class="submit-button treo-mat-button-large" (click)="upload()" [disabled]="fileName?false:true" mat-flat-button [color]="'primary'">
+                        <span *ngIf="!isloader">
+                            Upload
+                        </span>
+                        <mat-progress-spinner *ngIf="isloader" [diameter]="24" [mode]="'indeterminate'">
+                        </mat-progress-spinner>
+                    </button>
+                </div>
+
+                <div *ngIf="uploadingType == 'done'" style="text-align: center;">
+                    <div class="title"><u>Thank You</u></div><br>
+                    <div class="subtitle">Your video successfully uploaded<br> Please check your registerd mail for confirmation </div>
+                </div>
+
+                <div *ngIf="uploadingType == 'submitted'" style="text-align: center;">
+                    <div class="title"><u>Sorry!!!</u></div><br>
+                    <div class="subtitle">Already uploaded<br> Please check your registerd mail for confirmation </div>
+                </div>
+
+            </div>
+
+        </div>
+    </treo-card>
+
+    <div *ngIf="uploadingType == 'error'">
+        <h1>Ooops... 404!</h1>
+        <h6>The page you requested could not be found.</h6>
+    </div>
+
+</div>

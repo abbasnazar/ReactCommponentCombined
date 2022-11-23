@@ -1,0 +1,42 @@
+@import 'treo';
+app-setting {
+    .content-layout {
+        align-items: center;
+        justify-content: center;
+        treo-card {
+            .form-container {
+                // .form {
+                .avatar {
+                    position: relative;
+                    margin: 0 auto;
+                    width: 116px;
+                    height: 116px;
+                    img {
+                        width: 116px;
+                        min-width: 116px;
+                        height: 116px;
+                        min-height: 116px;
+                        border-radius: 50%;
+                    }
+                    .mat-icon {
+                        @include treo-icon-size(96);
+                    }
+                }
+                mat-form-field {
+                    width: 100%;
+                }
+                .field-footer {
+                    .link {
+                        margin: 0 4px;
+                    }
+                }
+                // }
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------------------------------
+// @ Theming
+// -----------------------------------------------------------------------------------------------------
+@include treo-theme {}

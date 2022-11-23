@@ -1,0 +1,52 @@
+<div class="w-full" style="background: white;" *ngIf="randertype=='render'">
+    <div class="w-full p-5" style="background: #1e293b;height: 100px;">
+        <img *ngIf="descObj.logo" style="height: 100%;width: auto;" src="{{getImage()}}">
+    </div>
+    <div class="w-full p-5 gt-xs:p-20">
+        <h1 style="margin: 0 !important">{{descObj.title?descObj.title:'-'}}</h1>
+        <div style="font-size: 20px;">At {{descObj.companyName?descObj.companyName:'-'}}</div>
+        <div>
+            <button (click)="apply()" class="ml-2" mat-flat-button [color]="'primary'">
+                Apply Now
+            </button>
+        </div><br>
+        <strong>Job Description</strong><br>
+        <div class="w-full">
+            {{descObj.description?descObj.description:'-'}}
+        </div>
+        <br>
+        <br>
+
+        <div class="flex flex-col gt-xs:flex-row">
+            <div class="w-full gt-xs:w-1/2">
+                <strong>Location</strong><br> {{descObj.city?descObj.city:'-'}}
+                <br>
+                <br>
+                <strong>Job Type</strong><br> {{descObj.type?descObj.type:'-'}}
+            </div>
+            <div class="w-full mt-5 gt-xs:w-1/2 gt-xs:mt-0">
+                <strong>Qualification Required</strong><br> {{descObj.qualification?descObj.qualification:'-'}}
+                <br>
+                <br>
+                <strong>Experience Required</strong><br> {{descObj.experiencelevel?descObj.experiencelevel:'-'}}
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="w-full p-5 gt-xs:p-20" style="height: 200px;background: #f1f5f9;">
+        <img style="height: 70px;width: auto;" src="../../../assets/images/logo/Jobmojo-Logo-Dark-large.png"><br>
+        <div>
+            Office Address here?<br> © 2021. All rights reserved.
+        </div>
+    </div>
+
+</div>
+
+
+<div style="margin: auto;" *ngIf="randertype == 'error'">
+    <h1>Ooops... 404!</h1>
+    <h6>The page you requested could not be found.</h6>
+</div>

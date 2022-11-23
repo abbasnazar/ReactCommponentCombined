@@ -1,0 +1,55 @@
+.custom-container {
+    padding: 3%;
+    /* background-image: url('../../assets/login.jpg'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.icon-button {
+    font-size: 50px;
+    padding: 10%;
+    background: lightseagreen;
+    border-radius: 10%;
+    box-shadow: 4px 4px 7px rgb(37, 170, 163);
+}
+
+.icon-button:hover {
+    font-size: 50px;
+    padding: 9%;
+    background: gray;
+}
+
+.blink {
+    color: red;
+    background: red;
+    border-radius: 50%;
+    animation: op 1s ease infinite;
+}
+
+@keyframes op {
+    0% {
+        opacity: 0;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@import 'treo';
+.content-layout {
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,336 @@
+// .section {
+//     // margin: 100px 0;
+//     background-color: #084175;
+//     width: 100vw;
+//     height: 589px;
+//     display: flex;
+
+//     .container {
+
+//       .content {
+//         display: flex;
+//         flex-direction: column;
+
+//         h1 {
+//           color: #ffffff;
+//           font-size: 3.5vw;
+//           margin: 150px 120px;
+//           line-height: 1.4;
+//         }
+
+//         .btn {
+
+//           a {
+
+//           }
+//         }
+
+//       }
+
+//       img {
+
+//       }
+//     }
+    
+//     .container {
+//         // background-color: #084175;
+//         // width: 100vw;
+//         // height: 589px;
+//         // display: flex;
+
+//         @media screen and (max-width: 768px)  {
+//           display: flex;
+//           flex-direction: column;
+//         }
+
+//         @media screen and (max-width: 1100px) {
+//           height: 500px;
+//           width: 375px;
+//         }
+
+//         h1 {
+//             color: #ffffff;
+//             // font-size: 60px;
+//             // font-size: 3.5rem;
+//             font-size: 3.5vw;
+//             margin: 150px 120px;
+//             line-height: 1.4;
+
+//             @media screen and (min-width: 300px) and (max-width: 425px) {
+//               font-size: 6vw;
+//               margin: 77.5px 60px;
+//               display: flex;
+
+//             }
+
+//             .btn {
+//                 background: #0049dd;
+//                 background-image: -webkit-linear-gradient(top, #0049dd, #0049dd);
+//                 background-image: -moz-linear-gradient(top, #0049dd, #0049dd);
+//                 background-image: -ms-linear-gradient(top, #0049dd, #0049dd);
+//                 background-image: -o-linear-gradient(top, #0049dd, #0049dd);
+//                 background-image: linear-gradient(to bottom, #0049dd, #0049dd);
+//                 -webkit-border-radius: 5;
+//                 -moz-border-radius: 5;
+//                 border-radius: 5px;
+//                 font-family: Arial;
+//                 color: #ffffff;
+//                 padding: 18px 26px 18px 26px;
+//                 text-decoration: none;
+//                 border: none;
+
+//                 @media screen and (min-width: 300px) and (max-width: 425px) {
+//                   font-size: 14px;
+//                   padding: 8px;
+//                   margin-top: 20px;
+//                 }
+        
+//                 a {
+//                   text-decoration: none;
+//                   color: #ffffff;
+//                   font-size: 18px;
+
+//                   // @media screen and (min-width: 300px) and (max-width: 425px) {
+//                   //   font-size: 16px;
+//                   //   padding: 0 26px;
+//                   // }
+
+//                   @media only screen and (min-width: 300px) and (max-width: 425px) {
+//                     font-size: 8px;
+//                   }
+        
+//                   @media only screen and (min-width: 425px) and (max-width: 768px){
+//                     font-size: 14px;
+//                   }
+//                 }
+
+//                 @media only screen and (min-width: 300px) and (max-width: 425px) {
+//                   padding: 5px 8px;
+//                 }
+        
+//                 @media only screen and (min-width: 425px) and (max-width: 768px){
+//                   padding: 10px 16px;
+//                 }
+//               }
+              
+//               .btn:hover {
+//                 background: #3cb0fd;
+//                 background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+//                 background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+//                 background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+//                 background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+//                 background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+//                 text-decoration: none;
+//               }
+//         }
+
+//         img { 
+//             height: 500px;
+//             width: 340px;
+//             margin-right: 120px;
+//             // height: 65vh;
+//             // width: 27vw;
+//             margin-top: 89px;
+            
+            
+//             @media screen and (min-width: 768px) and (max-width: 1100px) {
+//               height: 400px;
+//               width: 375px;
+//             }
+
+//             @media screen and (min-width: 300px) and (max-width: 425px) {
+//               height: 210px;
+//               width: 150px;
+//               margin: auto;
+//             }
+
+//         }
+//     }        
+// }
+
+
+
+.section {
+  background-color: #084175;
+  width: 100vw;
+  height: 589px;
+  display: flex;
+  padding: 0 64px;
+  margin: 150px 0;
+
+  @media screen and (max-width: 1000px) {
+    height: 400px;
+  }
+
+  @media screen and (max-width: 668px) {
+    height: 300px;
+  }
+
+  @media screen and (max-width: 550px) {
+    height: 200px;
+  }
+
+  @media screen and (max-width: 425px) {
+    height: 150px;
+  }
+
+  @media screen and (max-width: 375px) {
+    height: 130px;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 50vw;
+
+      .button {
+        width: 300px;
+        background: #0049dd;
+      }
+
+      h1 {
+        color: #ffffff;
+        font-size: 60px;
+        font-size: 3.5rem;
+        font-size: 3.5vw;
+        line-height: 1.4;
+      }
+
+      .btn {
+        background: #0049dd;
+        background-image: -webkit-linear-gradient(top, #0049dd, #0049dd);
+        background-image: -moz-linear-gradient(top, #0049dd, #0049dd);
+        background-image: -ms-linear-gradient(top, #0049dd, #0049dd);
+        background-image: -o-linear-gradient(top, #0049dd, #0049dd);
+        background-image: linear-gradient(to bottom, #0049dd, #0049dd);
+        -webkit-border-radius: 5;
+        -moz-border-radius: 5;
+        border-radius: 5px;
+        font-family: Arial;
+        color: #ffffff;
+        margin-top: 25px;
+        text-decoration: none;
+        border: none;
+        max-width: 200px;
+
+        a {
+          text-decoration: none;
+          color: #ffffff;
+          font-size: 18px;
+
+          @media screen and (max-width: 875px) {
+            font-size: 17px;
+          }
+
+          @media screen and (max-width: 768px) {
+            font-size: 15px;
+          }
+
+          @media screen and (max-width: 668px) {
+            font-size: 14px;
+          }
+
+          @media screen and (max-width: 550px) {
+            font-size: 13px;
+          }
+
+          @media screen and (max-width: 475px) {
+            font-size: 12px;
+          }
+
+          @media screen and (max-width: 400px) {
+            font-size: 10px;
+          }
+        }
+
+        @media screen and (max-width: 1024px) {
+          padding: 15px;
+          width: 150px;
+        }
+
+        @media screen and (max-width: 875px) {
+          padding: 13px 8px;
+          width: 130px;
+          margin-top: 18px;
+        }
+
+        @media screen and (max-width: 768px) {
+          padding: 10px 8px;
+          width: 120px;
+          margin-top: 16px;
+        }
+
+        @media screen and (max-width: 668px) {
+          padding: 10px 6px;
+          width: 110px;
+          margin-top: 14px;
+        }
+
+        @media screen and (max-width: 550px) {
+          padding: 6px 4px;
+          width: 100px;
+          margin-top: 12px;
+        }
+
+        @media screen and (max-width: 475px) {
+          padding: 4px 3px;
+          width: 80px;
+          margin-top: 11px;
+        }
+
+        @media screen and (max-width: 400px) {
+          padding: 2px 3px;
+          width: 70px;
+          margin-top: 8px;
+        }
+      }
+
+      .btn:hover {
+        background: #3cb0fd;
+        background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+        background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+        background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+        background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+        background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+        text-decoration: none;
+      }
+
+    }
+
+    img {
+      max-width: 50vw;
+      height: auto;
+
+      @media screen and (max-width: 1000px) {
+        width: auto;
+        height: 400px;
+      }
+
+      @media screen and (max-width: 668px) {
+        width: auto;
+        height: 300px;
+      }
+
+      @media screen and (max-width: 550px) {
+        width: auto;
+        height: 200px;
+      }
+
+      @media screen and (max-width: 425px) {
+        width: auto;
+        height: 150px;
+      }
+
+      @media screen and (max-width: 375px) {
+        width: auto;
+        height: 130px;
+      }
+    }
+
+  }
+}

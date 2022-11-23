@@ -1,0 +1,428 @@
+<div class="content-layout fullwidth-basic-normal-scroll">
+
+    <mat-drawer-container>
+
+        <!-- Drawer -->
+        <mat-drawer [mode]="'side'" [opened]="isOpen" [position]="'end'" [disableClose]="true" #matDrawer>
+            <div class="p-8">
+                <div class="flex">
+                    <div class="user flex-row p-0">
+                        <div class="avatar">
+                            <img *ngIf="sideData.avatar" [src]="sideData.avatar">
+                            <mat-icon *ngIf="!sideData.avatar" style="color: lightgray;" [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                        </div>
+                        <div class="info flex-row w-full pt-4">
+                            <div class="name">
+                                <h4><strong>{{sideData.name}}</strong></h4>
+                            </div>
+                            <!-- <div style="color: #4f46e5;">{{sideData.currentcity || '-'}}, India</div> -->
+                        </div>
+                        <div class="flex-row pt-4">
+                            <button (click)="isOpen = false" class="add-section" mat-round-button>
+                                <mat-icon [svgIcon]="'close'"></mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class=" flex">
+                    <div class="flex-auto pr-3">
+                        <button class="add-section" (click)="profile()" [color]="'primary'" mat-flat-button>
+                            <mat-icon [svgIcon]="'contact_page'"></mat-icon> Profile
+                        </button>
+                    </div>
+                    <div class="flex-auto pr-3">
+                        <button class="add-section" *ngIf="accessRight.editaccess" (click)="goto(sideData)" [color]="'primary'" mat-flat-button>
+                            <mat-icon [svgIcon]="'edit'"></mat-icon> Edit
+                        </button>
+                    </div>
+                    <!-- <div class="flex-auto">
+                        <button class="add-section" mat-flat-button>
+                            <i title="Send Whatsapp" style="cursor: pointer;margin-right: 10px; color:  #5850ec"
+                                class="fa fa-whatsapp fa-2x" aria-hidden="true"></i>
+                        </button>
+                    </div> -->
+                    <div class="flex-auto">
+                        <button (click)="visitUrl(sideData.linkedin)" class="add-section" mat-flat-button>
+                            <i title="Send Linkedin" style="cursor: pointer;margin-right: 10px;"
+                                class="fa fa-linkedin-square fa-2x  text-blue" aria-hidden="true"></i>
+                            <!-- <mat-icon [svgIcon]="'heroicons_solid:linkedin'"></mat-icon> -->
+                        </button>
+                    </div>
+                    <div class="flex-auto">
+                        <button (click)="visitUrl(sideData.facebook)" class="add-section" mat-flat-button>
+                            <mat-icon [svgIcon]="'mat_outline:facebook'" style="color:blue !important"></mat-icon>
+                        </button>
+                    </div>
+                    <div class="flex-auto">
+                        <button (click)="visitUrl(sideData.twitter)" class="add-section" mat-flat-button>
+                            <mat-icon [svgIcon]="'feather:twitter'" style="color:blue !important"></mat-icon>
+                        </button>
+                    </div>
+
+
+                </div>
+                <div class="flex mt-5">
+                    <div>
+                        <mat-icon class="mr-5" [svgIcon]="'email'"></mat-icon>
+                    </div>
+                    <div class="flex-full">
+                        {{sideData.email||'-'}}
+                    </div>
+                </div>
+                <div class="flex mt-2">
+                    <div class="flex-row pr-3">&nbsp;&nbsp;</div>
+                    <div class="flex-row pr-3">
+                        <button class="add-section" style="color: blue;" mat-flat-button>
+                            <mat-icon [svgIcon]="'email'"></mat-icon> &nbsp;Email
+                        </button>
+                    </div>
+
+                    <div class="flex-row ">
+                        <button class="add-section" (click)="copy(sideData.email)" style="color: blue;" mat-flat-button>
+                            <mat-icon [svgIcon]="'content_copy'"></mat-icon> &nbsp;Copy
+                        </button>
+                    </div>
+                </div>
+                <div class="flex mt-5">
+                    <div>
+                        <mat-icon class="mr-5" [svgIcon]="'call'"></mat-icon>
+                    </div>
+                    <div class="flex-full">
+                        {{sideData.mobile||'-'}}
+                    </div>
+                </div>
+                <div class="flex mt-2">
+                    <div class="flex-row pr-3">&nbsp;&nbsp;</div>
+                    <div class="flex-row pr-3">
+                        <button class="add-section" style="color: blue;" mat-flat-button>
+                            <mat-icon [svgIcon]="'call'"></mat-icon> &nbsp;Call
+                        </button>
+                    </div>
+
+                    <!-- <div class="flex-row ">
+                        <button class="add-section" style="color: blue;" mat-flat-button>
+                            <mat-icon>whatsapp</mat-icon> &nbsp;Whatsapp
+                        </button>
+                    </div> -->
+                    <div class="flex-row ">
+                        <button class="add-section" (click)="copy(sideData.mobile)" style="color: blue;" mat-flat-button>
+                            <mat-icon [svgIcon]="'content_copy'"></mat-icon> &nbsp;Copy
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex mt-5">
+                    <div>
+                        <mat-icon class="mr-5" [svgIcon]="'feather:settings'"></mat-icon>
+                    </div>
+                    <div class="flex-full">
+                        {{sideData.keyskills||'-'}}
+                    </div>
+                </div>
+
+                <div class="flex mt-5">
+                    <div>
+                        <mat-icon class="mr-5" [svgIcon]="'location_on'"></mat-icon>
+                    </div>
+                    <div class="flex-full">
+                        {{sideData.currentcity || '-'}}, India
+                    </div>
+                </div>
+                <div class="flex mt-5">
+                    <div>
+                        <mat-icon class="mr-5" [svgIcon]="'heroicons_outline:academic-cap'"></mat-icon>
+                    </div>
+                    <div class="flex-full">
+                        {{sideData.highestdegree || '-'}}
+                    </div>
+                </div>
+                <div class="flex mt-5">
+                    <div>
+                        <mat-icon class="mr-5" [svgIcon]="'mat_outline:local_mall'"></mat-icon>
+                    </div>
+                    <div class="flex-full">
+                        {{sideData.workexperience || '-'}}
+                    </div>
+                </div>
+
+                <div class="flex mt-5">
+                    <div>
+                        <mat-icon class="mr-5" [svgIcon]="'dripicons:view-list'"></mat-icon>
+                    </div>
+                    <div class="flex-full">
+                        {{sideData.source || '-'}}
+                    </div>
+                </div>
+
+                <div class="flex mt-5">
+                    <div>
+                        <mat-icon class="mr-5" [svgIcon]="'mat_outline:call_received'"></mat-icon>
+                    </div>
+                    <div class="flex-full">
+                        <strong>Received </strong> {{sideData.createdon | date:'dd MMM y' || '-'}}
+                    </div>
+                </div>
+
+                <div class="flex mt-5">
+                    <div>
+                        <mat-icon class="mr-5" [svgIcon]="'calendar_today'"></mat-icon>
+                    </div>
+                    <div class="flex-full">
+                        <strong>Available From </strong>{{sideData.createdon | date:'dd MMM y' || '-'}}
+                    </div>
+                </div>
+
+                <div class="flex pt-5">
+                    <!-- <div class=" flex-auto pr-3 ">
+                        <button style="color: blue; " class=" add-section " [color]=" 'lightgray' " mat-flat-button>
+                            <mat-icon [svgIcon]=" 'iconsmind:video_5' "></mat-icon> &nbsp; Interview video
+                        </button>
+                    </div> -->
+                    <div class="flex-auto pr-3 ">
+                        <button style="color: blue;" (click)="download(sideData.resumeurl)" class=" add-section " [color]=" 'lightgray' " mat-flat-button>
+                            <mat-icon [svgIcon]=" 'dripicons:arrow-down' "></mat-icon> &nbsp; Download Resume
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+        </mat-drawer>
+
+        <mat-drawer-content>
+
+            <div class="main ">
+
+                <div class="header ">
+                    <div class="title ">
+
+                        <h1>Talents</h1>
+
+                        <div class="remaining-tasks-count">
+                            <span>{{rows.length}} Types</span>
+                        </div>
+
+                    </div>
+
+                    <div class="main-actions ">
+                        <!-- <input type="file" id="file" (change)="getFile($event.target.files[0])" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                text/plain, application/pdf" style="display: none;"/>
+                        <button class="add-section w-full gt-xs:w-auto gt-xs:mr-5" onclick="document.getElementById('file').click()" mat-flat-button [color]="'primary'">
+                            <mat-icon [svgIcon]="'attach_file'"></mat-icon>
+                            Upload Talent
+                        </button> -->
+                        <button class="add-section w-full gt-xs:w-auto gt-xs:mr-5" (click)="parse()" mat-flat-button [color]="'primary'">
+                            Parse Resume
+                        </button>
+                        <!-- <button class="add-section w-full gt-xs:w-auto gt-xs:mr-5" (click)="apiParse()" mat-flat-button [color]="'primary'">
+                            <mat-icon [svgIcon]="'save'"></mat-icon>
+                            Submit
+                        </button> -->
+                        <span class="search ">
+
+                            <mat-form-field class="treo-mat-dense treo-mat-no-subscript ">
+                                <mat-icon matPrefix [svgIcon]=" 'search' "></mat-icon>
+                                <input matInput [autocomplete]=" 'off' " [(ngModel)]="filterObj.search "
+                                    (ngModelChange)="search() " [placeholder]=" 'Search Talent' ">
+                            </mat-form-field>
+
+                        </span>
+
+                        <button *ngIf="accessRight.addaccess" class="add-section w-full gt-xs:w-auto" (click)="goto({})" mat-flat-button [color]=" 'primary' ">
+                            <mat-icon [svgIcon]="'add'"></mat-icon>
+                            New Talent
+                        </button>
+                        <!-- <button *ngIf="accessRight.addaccess" class="add-section w-full gt-xs:w-auto gt-xs:ml-2" (click)="goto({})" mat-flat-button [color]=" 'primary' ">
+                            <mat-icon [svgIcon]="'add'"></mat-icon>
+                            New Bulk Talent
+                        </button> -->
+                        <button *ngIf="accessRight.addaccess" class="add-section w-full gt-xs:w-auto gt-xs:ml-2" mat-flat-button [color]=" 'primary' ">
+                            <mat-icon [svgIcon]="'heroicons_solid:download'"></mat-icon><span
+                                [matMenuTriggerFor]="export">
+
+                                Export CSV File
+                            </span>
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- <button mat-button [matMenuTriggerFor]="menu">Menu</button> -->
+                <mat-menu #export="matMenu">
+                    <p *ngFor="let c of exportColumn" (click)="$event.stopPropagation()" mat-menu-item>
+                        <input type="checkbox" [(ngModel)]="c.value" style="margin-right: 10px;"> {{c.name}}
+                    </p>
+                    <div mat-menu-item>
+                        <button (click)="exportExcel()" mat-flat-button class="w-full" [color]="'primary'">Export</button>
+                    </div>
+                </mat-menu>
+
+                <mat-menu #menu="matMenu">
+                    <p *ngFor="let c of selectedColumn" (click)="$event.stopPropagation()" mat-menu-item>
+                        <input type="checkbox" [(ngModel)]="c.value" style="margin-right: 10px;"> {{c.name}}
+                    </p>
+                    <div mat-menu-item>
+                        <button (click)="updateViewMetadata()" mat-flat-button class="w-full" [color]="'primary'">Save</button>
+                    </div>
+                </mat-menu>
+                <div class="pr-4">
+                    <button style="float:right;" [color]="'primary'" mat-flat-button type="button" [matMenuTriggerFor]="menu">
+                        <mat-icon style="font-size: 20px;">settings</mat-icon> &nbsp; Settings
+                    </button>
+                </div>
+                <div class="p-4" style="width: 100%;overflow: auto;">
+                    <mat-tab-group (selectedTabChange)="tabSelection($event)">
+                        <mat-tab label="My Talents">
+
+                            <ngx-datatable #myTable class="material" [rows]='rows' [limit]="10" [columnMode]="'force'" [scrollbarH]="true" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'">
+
+                                <ngx-datatable-column name="Name" *ngIf="tableShowColumn.Name">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <u (click)="details(row) " style="color: blue;cursor: pointer; ">{{row.name?row.name:row.email}}</u>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Source" *ngIf="tableShowColumn.Source">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.source}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Phone No" *ngIf="tableShowColumn.Phone">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.mobile}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Alternate Phone" *ngIf="tableShowColumn['Alternate Phone']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.alternatemobile}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Email" *ngIf="tableShowColumn.Email">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.email}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="City" *ngIf="tableShowColumn.City">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.currentcity}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Highest Degree" *ngIf="tableShowColumn['Highest Degree']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.highestdegree}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Experience" *ngIf="tableShowColumn['Experience']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.totalexperienceyear}}.{{row?.totalexperiencemonth}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Available From" *ngIf="tableShowColumn['Available From']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.availablefrom| date:'dd MMM y' || '-'}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Received On" *ngIf="tableShowColumn.Receivedon">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.createdon | date:'dd MMM y' || '-'}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Actions" *ngIf="tableShowColumn.Action">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <button *ngIf="accessRight.editaccess" (click)="goto(row)" style="color:blue !important" mat-flat-button>
+                                            <mat-icon [svgIcon]="'edit'"></mat-icon> &nbsp;Edit
+                                        </button>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                        </mat-tab>
+                        <mat-tab label="All Talents">
+                            <ngx-datatable #myTable class="material" [rows]='rows' [limit]="10" [columnMode]="'force'" [scrollbarH]="true" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'">
+
+                                <ngx-datatable-column name="Name" *ngIf="tableShowColumn.Name">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <u (click)="details(row) " style="color: blue;cursor: pointer; ">{{row.name?row.name:row.email}}</u>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Source" *ngIf="tableShowColumn.Source">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.source}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Phone No" *ngIf="tableShowColumn.Phone">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.mobile}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Alternate Phone" *ngIf="tableShowColumn['Alternate Phone']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.alternatemobile}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Email" *ngIf="tableShowColumn.Email">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.email}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="City" *ngIf="tableShowColumn.City">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.currentcity}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Highest Degree" *ngIf="tableShowColumn['Highest Degree']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.highestdegree}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Experience" *ngIf="tableShowColumn['Experience']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.totalexperienceyear}}.{{row?.totalexperiencemonth}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Available From" *ngIf="tableShowColumn['Available From']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.availablefrom| date:'dd MMM y' || '-'}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Received On" *ngIf="tableShowColumn.Receivedon">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.createdon | date:'dd MMM y' || '-'}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Actions" *ngIf="tableShowColumn.Action">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <button *ngIf="accessRight.editaccess" (click)="goto(row)" style="color:blue !important" mat-flat-button>
+                                            <mat-icon [svgIcon]="'edit'"></mat-icon> &nbsp;Edit
+                                        </button>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                        </mat-tab>
+                    </mat-tab-group>
+
+                </div>
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+</div>

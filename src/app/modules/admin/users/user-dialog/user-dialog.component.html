@@ -1,0 +1,35 @@
+<h3>{{data.title}}</h3>
+<div *ngIf="data.title=='Assign Group'" style="width: 400px;">
+    <mat-form-field class="treo-mat-dense treo-mat-no-subscript">
+        <mat-label>Group</mat-label>
+        <mat-select [(ngModel)]="selectedGroup" multiple>
+            <mat-option *ngFor="let group of groups" [value]="group.id">{{group.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br>
+    <div style="margin-top: 20px;">
+        <button class="add-task" (click)="closeDialog()" mat-flat-button [color]="'primary'">
+            Close
+        </button>
+        <button class="add-task" (click)="update()" mat-flat-button [color]="'primary'">
+            Assign
+        </button>
+
+    </div>
+</div>
+
+<div *ngIf="data.title=='Confirmation'" style="width: 400px;">
+    <div>
+        <strong>Do you want to {{data.isactive?'deactivate':'activate'}} this user?</strong>
+    </div>
+    <br>
+    <div style="margin-top: 20px;">
+        <button class="add-task" (click)="closeDialog()" mat-flat-button [color]="'primary'">
+            No
+        </button>
+        <button class="add-task" (click)="acrivateDeactivateUser()" mat-flat-button [color]="'primary'">
+            Yes
+        </button>
+
+    </div>
+</div>

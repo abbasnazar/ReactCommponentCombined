@@ -1,0 +1,30 @@
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 100px 0;
+
+    @media screen and (max-width: 425px) {
+        display: flex;
+        flex-direction: column;
+        margin: 25px 0;
+    }
+
+    img {
+        width: 23%;
+        height: auto;
+        padding: 0 35px;
+
+        @media screen and (max-width: 425px) {
+            width: 75%;
+            height: auto;
+            padding: 35px 35px;  
+        }
+    }
+
+    img:hover {
+        width: 25%;
+        height: auto;
+        cursor: pointer;
+    }
+}

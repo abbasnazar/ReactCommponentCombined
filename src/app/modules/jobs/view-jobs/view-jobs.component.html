@@ -1,0 +1,502 @@
+<div class="content-layout fullwidth-basic-normal-scroll">
+    <mat-drawer-container>
+
+        <!-- Drawer -->
+        <mat-drawer [mode]="'side'" [opened]="isOpen" [position]="'end'" [disableClose]="true" #matDrawer>
+
+            <div class="p-8 ">
+                <div class="w-full">
+                    <h3 style="float: left;" class="m-0">
+                        {{jobDetails.title||'-'|titlecase}}<br><span style="font-size: 18px;">at
+                            {{jobDetails.contactCompanyName}}</span></h3>
+
+                    <button style="float: right;" (click)="isOpen=false">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div><br><br><br>
+                <div *ngIf="jobDetails.data?.length == 0" class="flex flex-col flex-auto p-6 pb-4 bg-card rounded overflow-hidden" style="text-align: center;">
+                    <div style="font-size: 16px;">
+                        <B>No bot results available.</B>
+                    </div>
+                    <div style="font-size: 16px;">You have not searched for<br> candidates for this job yet.</div>
+                    <button *ngIf="accessRight.editaccess && !jobDetails.data.status" (click)="openDialog('Talent Request', jobDetails.data)" style="color: #5850ec;" class="add-section" mat-flat-button>
+                        <mat-icon svgIcon="mat_outline:find_in_page"></mat-icon> &nbsp;
+                        Find Candidates
+                    </button>
+
+                </div>
+                <div *ngFor="let item of jobDetails.data" class="flex flex-col mt-8 p-4 bg-card shadow rounded overflow-hidden">
+
+                    <div class="flex flex-row gt-xs:flex-row pt-2">
+                        <div class="flex-auto gt-xs:w-1/2">
+                            <strong style="color: #64748b;">Bot Id</strong> <br> {{item.id}}
+                        </div>
+
+                        <div class="flex-auto gt-xs:w-1/2">
+                            <strong style="color: #64748b;">Status</strong> <br>
+                            <mat-icon style="position: relative;top: 8px;color: green;" *ngIf="item.status=='Done'" svgIcon="heroicons_outline:check-circle">
+                            </mat-icon>
+                            <mat-icon style="position: relative;top: 8px;color: blueviolet;" *ngIf="item.status=='In queue'" svgIcon="heroicons_outline:dots-circle-horizontal">
+                            </mat-icon>
+                            <mat-icon style="position: relative;top: 8px;color: lightcoral;" *ngIf="item.status=='In process'" svgIcon="mat_outline:watch_later">
+                            </mat-icon>
+                            <mat-icon style="position: relative;top: 8px;color: red;" *ngIf="item.status=='Failed'" svgIcon="heroicons_outline:exclamation-circle">
+                            </mat-icon> &nbsp; {{item.status}}
+
+                        </div>
+
+
+                    </div><br>
+
+                    <div class="flex flex-row gt-xs:flex-row pt-2">
+                        <div class="flex-auto gt-xs:w-1/2">
+                            <strong style="color: #64748b;">Started On</strong> <br> {{item.createdon}}
+                        </div>
+                        <div class="flex-auto gt-xs:w-1/2">
+                            <strong style="color: #64748b;">User</strong> <br> {{item.createdby}}
+                        </div>
+                    </div><br>
+
+                    <div class="flex flex-row gt-xs:flex-row mt-3" style="text-align: center;">
+
+                        <div class="w-1/5">
+                            <strong>{{item.talentCount}}</strong><br>
+                            <span style="font-size: 12px;">Resumes extracted</span>
+
+                        </div>
+                        <div class="w-1/5">
+                            <strong>{{item.interested}}</strong><br>
+                            <span style="font-size: 12px;"> Right to represent</span>
+                        </div>
+                        <div class="w-1/5">
+                            <strong>{{item.videouploaded}}</strong><br>
+                            <span style="font-size: 12px;"> Video</span>
+                        </div>
+                        <div class="w-1/5">
+                            <strong>{{item.qualified}}</strong><br>
+                            <span style="font-size: 12px;"> Qualified</span>
+                        </div>
+                        <div class="w-1/5">
+                            <strong>{{item.submitted}}</strong><br>
+                            <span style="font-size: 12px;"> Submitted</span>
+                        </div>
+
+                    </div>
+
+                    <br>
+                    <div *ngIf="accessRight.editaccess" class="flex flex-col gt-xs:flex-row mt-3 p-2">
+                        <!-- <div class="flex-auto">
+                            <h4 class="m-0">{{item.status}}</h4>
+                        </div> -->
+                        <button *ngIf="item.status =='Done'" (click)="goto(item.id)" style="color: white;float: right;background: #5850ec;" class="add-section w-full" mat-flat-button>
+                            <mat-icon svgIcon="mat_outline:format_list_bulleted"></mat-icon> &nbsp;
+                            Show Candidates
+                        </button>
+                        <button *ngIf="item.status =='Failed'" (click)="retryTalentRequest({trid:item.id,status:item.status})" style="color: white;float: right;background: #5850ec;" class="add-section w-full" mat-flat-button>
+                            <mat-icon svgIcon="mat_outline:refresh"></mat-icon> &nbsp;
+                            Retry
+                        </button>
+                        <button *ngIf="item.status !='Failed' && item.status !='Done'" style="color: white;float: right;background: blueviolet;" class="add-section w-full" mat-flat-button>
+                            <mat-icon svgIcon="mat_outline:sync"></mat-icon> &nbsp;
+                            In-Process
+                        </button>
+
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </mat-drawer>
+
+
+        <mat-drawer-content>
+            <!-- Main -->
+            <div class="main">
+
+                <!-- Header -->
+                <div class="header">
+
+                    <!-- Title -->
+                    <div class="title">
+                        <h1>Jobs</h1>
+
+                        <div class="remaining-tasks-count">
+                            <span>{{rows.length}} Jobs</span>
+                        </div>
+
+                    </div>
+
+                    <!-- Main actions -->
+                    <div class="main-actions">
+                        <span class="search">
+
+                            <mat-form-field class="treo-mat-dense treo-mat-no-subscript">
+                                <mat-icon matPrefix [svgIcon]="'search'"></mat-icon>
+                                <input matInput [autocomplete]="'off'" [(ngModel)]="filterObj.search"
+                                    (ngModelChange)="search()" [placeholder]="'Search Job'">
+                            </mat-form-field>
+
+                        </span>
+
+                        <!-- Add section button -->
+                        <button *ngIf="accessRight.addaccess" class="add-task w-full gt-xs:w-auto" (click)="addEdit('Add')" mat-flat-button [color]="'primary'">
+                            <mat-icon [svgIcon]="'add'"></mat-icon>
+                            Add Job
+                        </button>
+
+                        <button *ngIf="accessRight.addaccess" class="add-section w-full gt-xs:w-auto gt-xs:ml-2" mat-flat-button [color]=" 'primary' ">
+                            <mat-icon [svgIcon]="'heroicons_solid:download'"></mat-icon><span
+                                [matMenuTriggerFor]="export">
+
+                                Export CSV File
+                            </span>
+                        </button>
+                    </div>
+
+                    <mat-menu #export="matMenu">
+                        <p *ngFor="let c of exportColumn" (click)="$event.stopPropagation()" mat-menu-item>
+                            <input type="checkbox" [(ngModel)]="c.value" style="margin-right: 10px;"> {{c.name}}
+                        </p>
+                        <div mat-menu-item>
+                            <button (click)="exportExcel()" mat-flat-button class="w-full" [color]="'primary'">Export</button>
+                        </div>
+                    </mat-menu>
+
+                    <mat-menu #menu="matMenu">
+                        <p *ngFor="let c of selectedColumn" (click)="$event.stopPropagation()" mat-menu-item>
+                            <input type="checkbox" [(ngModel)]="c.value" style="margin-right: 10px;"> {{c.name}}
+                        </p>
+                        <div mat-menu-item>
+                            <button (click)="updateViewMetadata()" mat-flat-button class="w-full" [color]="'primary'">Save</button>
+                        </div>
+                    </mat-menu>
+
+                </div>
+                <div class="pr-4">
+                    <button style="float:right;" [color]="'primary'" mat-flat-button type="button" [matMenuTriggerFor]="menu">
+                        <mat-icon style="font-size: 20px;">settings</mat-icon> &nbsp; Settings
+                    </button>
+                </div>
+                <div class="p-4" style="width: 100%;overflow: auto;">
+                    <mat-tab-group (selectedTabChange)="tabSelection($event)">
+                        <mat-tab label="My Jobs">
+
+                            <ngx-datatable #myTable class="material" [rows]='rows' [limit]="10" [columnMode]="'force'" [scrollbarH]="true" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'">
+
+                                <ngx-datatable-column name="Job Id" prop="id" *ngIf="tableShowColumn['Job Id']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <span (click)="robotDetails(row)" class="link">{{row.id}}</span>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Issue Date" *ngIf="tableShowColumn['Issue Date']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.billstartdate}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Job Title" *ngIf="tableShowColumn['Job Title']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.title}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Company Name" *ngIf="tableShowColumn['Company Name']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.contactCompanyName}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="City" *ngIf="tableShowColumn.City">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.city}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Address" *ngIf="tableShowColumn.Address">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.address}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Allowed Submittals" *ngIf="tableShowColumn['Allowed Submittals']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.allowedsubmittals}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Start Date" *ngIf="tableShowColumn['Start Date']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.billstartdate}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="End Date" *ngIf="tableShowColumn['End Date']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.billenddate}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Start Rate" *ngIf="tableShowColumn['Start Rate']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.billstartrate}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="End Rate" *ngIf="tableShowColumn['End Rate']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.billendrate}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Currency" *ngIf="tableShowColumn.Currency">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.currencyName}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Description" *ngIf="tableShowColumn.Description">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.description}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Exclusion" *ngIf="tableShowColumn.Exclusion">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.exclusion}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Experience" *ngIf="tableShowColumn.Experience">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.experience}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Industry Name" *ngIf="tableShowColumn['Industry Name']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.industryname}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Openings" *ngIf="tableShowColumn['Openings']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.openings}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Notice Period" *ngIf="tableShowColumn['Notice Period']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.noticeperiod}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Created By" *ngIf="tableShowColumn['Created By']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.createdbyName}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="AI Recruiter" *ngIf="tableShowColumn['AI Recruiter']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <button *ngIf="accessRight.editaccess && !row.status" (click)="openDialog('Talent Request', row)" style="color: #5850ec;" class="add-section" mat-flat-button>
+                                            <mat-icon svgIcon="mat_outline:find_in_page"></mat-icon> &nbsp;
+                                            Find Candidates
+                                        </button>
+                                        <div *ngIf="accessRight.editaccess && row.status" style="padding:0 16px;">
+                                            <mat-icon style="position: relative;top: 8px;color: green;" *ngIf="row.status=='Done'" svgIcon="heroicons_outline:check-circle">
+                                            </mat-icon>
+                                            <mat-icon style="position: relative;top: 8px;color: blueviolet;" *ngIf="row.status=='In queue'" svgIcon="heroicons_outline:dots-circle-horizontal">
+                                            </mat-icon>
+                                            <mat-icon style="position: relative;top: 8px;color: lightcoral;" *ngIf="row.status=='In process'" svgIcon="mat_outline:watch_later">
+                                            </mat-icon>
+                                            <mat-icon style="position: relative;top: 8px;color: red;" *ngIf="row.status=='Failed'" svgIcon="heroicons_outline:exclamation-circle">
+                                            </mat-icon> &nbsp; {{row.status}}.
+                                            <span *ngIf="row.status=='Failed' || row.status=='Done'" (click)="openDialog('Talent Request', row)" class="link">Retry?</span>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Actions" *ngIf="tableShowColumn.Actions">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <button *ngIf="accessRight.editaccess" (click)="addEdit('Update',row)" style="color: #5850ec;" class="add-section" mat-flat-button>
+                                            <mat-icon svgIcon="edit"></mat-icon> &nbsp;
+                                            Edit
+                                        </button>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <!-- <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false" [canAutoResize]="false">
+                                    <ng-template let-column="column" ngx-datatable-header-template>
+                                        <mat-icon style="height: 10px;margin: 0;padding: 0;" [matMenuTriggerFor]="menu" [svgIcon]="'edit'">
+                                        </mat-icon>
+                                    </ng-template>
+                                </ngx-datatable-column> -->
+                            </ngx-datatable>
+
+
+                        </mat-tab>
+                        <mat-tab label="All Jobs">
+                            <!-- <table mat-table [dataSource]="rows" class="mat-elevation-z4 w-full"> -->
+                            <ngx-datatable #myTable class="material" [rows]='rows' [limit]="10" [columnMode]="'force'" [scrollbarH]="true" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'">
+
+                                <ngx-datatable-column name="Job Id" prop="id" *ngIf="tableShowColumn['Job Id']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <span (click)="robotDetails(row)" class="link">{{row.id}}</span>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Issue Date" *ngIf="tableShowColumn['Issue Date']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.billstartdate}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Job Title" *ngIf="tableShowColumn['Job Title']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.title}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Company Name" *ngIf="tableShowColumn['Company Name']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.contactCompanyName}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="City" *ngIf="tableShowColumn.City">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.city}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Address" *ngIf="tableShowColumn.Address">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.address}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Allowed Submittals" *ngIf="tableShowColumn['Allowed Submittals']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.allowedsubmittals}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Start Date" *ngIf="tableShowColumn['Start Date']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.billstartdate}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="End Date" *ngIf="tableShowColumn['End Date']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.billenddate}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Start Rate" *ngIf="tableShowColumn['Start Rate']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.billstartrate}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="End Rate" *ngIf="tableShowColumn['End Rate']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.billendrate}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Currency" *ngIf="tableShowColumn.Currency">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.currencyName}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Description" *ngIf="tableShowColumn.Description">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.description}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Exclusion" *ngIf="tableShowColumn.Exclusion">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.exclusion}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Experience" *ngIf="tableShowColumn.Experience">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.experience}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Industry Name" *ngIf="tableShowColumn['Industry Name']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.industryname}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Openings" *ngIf="tableShowColumn['Openings']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.openings}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Notice Period" *ngIf="tableShowColumn['Notice Period']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.noticeperiod}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Created By" *ngIf="tableShowColumn['Created By']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        {{row?.createdbyName}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="AI Recruiter" *ngIf="tableShowColumn['AI Recruiter']">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <button *ngIf="accessRight.editaccess && !row.status" (click)="openDialog('Talent Request', row)" style="color: #5850ec;" class="add-section" mat-flat-button>
+                                            <mat-icon svgIcon="mat_outline:find_in_page"></mat-icon> &nbsp;
+                                            Find Candidates
+                                        </button>
+                                        <div *ngIf="accessRight.editaccess && row.status" style="padding:0 16px;">
+                                            <mat-icon style="position: relative;top: 8px;color: green;" *ngIf="row.status=='Done'" svgIcon="heroicons_outline:check-circle">
+                                            </mat-icon>
+                                            <mat-icon style="position: relative;top: 8px;color: blueviolet;" *ngIf="row.status=='In queue'" svgIcon="heroicons_outline:dots-circle-horizontal">
+                                            </mat-icon>
+                                            <mat-icon style="position: relative;top: 8px;color: lightcoral;" *ngIf="row.status=='In process'" svgIcon="mat_outline:watch_later">
+                                            </mat-icon>
+                                            <mat-icon style="position: relative;top: 8px;color: red;" *ngIf="row.status=='Failed'" svgIcon="heroicons_outline:exclamation-circle">
+                                            </mat-icon> &nbsp; {{row.status}}.
+                                            <span *ngIf="row.status=='Failed' || row.status=='Done'" (click)="openDialog('Talent Request', row)" class="link">Retry?</span>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Actions" *ngIf="tableShowColumn.Actions">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <button *ngIf="accessRight.editaccess" (click)="addEdit('Update',row)" style="color: #5850ec;" class="add-section" mat-flat-button>
+                                            <mat-icon svgIcon="edit"></mat-icon> &nbsp;
+                                            Edit
+                                        </button>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <!-- <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false" [canAutoResize]="false">
+                                        <ng-template let-column="column" ngx-datatable-header-template>
+                                            <mat-icon style="height: 10px;margin: 0;padding: 0;" [matMenuTriggerFor]="menu" [svgIcon]="'edit'">
+                                            </mat-icon>
+                                        </ng-template>
+                                    </ngx-datatable-column> -->
+                            </ngx-datatable>
+
+                        </mat-tab>
+                    </mat-tab-group>
+
+                </div>
+
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+</div>

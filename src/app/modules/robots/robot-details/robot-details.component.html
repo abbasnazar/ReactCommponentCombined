@@ -1,0 +1,491 @@
+<div class="content-layout fullwidth-basic-normal-scroll">
+
+    <mat-drawer-container>
+
+        <!-- Drawer -->
+        <mat-drawer [mode]="'side'" [opened]="isOpen" [position]="'end'" [disableClose]="true" #matDrawer>
+            <div class="p-8">
+                <div class="flex">
+                    <div class="user flex-row p-0">
+                        <div class="avatar">
+                            <img *ngIf="sideData.avatar" [src]="sideData.avatar">
+                            <mat-icon *ngIf="!sideData.avatar" style="color: lightgray;" [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                        </div>
+                        <div class="info flex-row w-full pt-4">
+                            <div class="name">
+                                <h4>{{sideData.name}}</h4>
+                            </div>
+                            <div style="color: #4f46e5;">{{sideData.currentcity || '-'}}, India</div>
+                        </div>
+                        <div class="flex-row pt-4">
+                            <button (click)="isOpen = false" class="add-section" mat-round-button>
+                                <mat-icon [svgIcon]="'close'"></mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class=" flex">
+                    <div class="flex-auto pr-3">
+                        <button (click)="profile()" class="add-section" [color]="'primary'" mat-flat-button>
+                            <mat-icon [svgIcon]="'contact_page'"></mat-icon> Profile
+                        </button>
+                    </div>
+                    <div class="flex-auto  pr-3">
+                        <button class="add-section" (click)="goto(sideData)" [color]="'primary'" mat-flat-button>
+                            <mat-icon [svgIcon]="'edit'"></mat-icon> Edit
+                        </button>
+                    </div>
+                    <!-- <div class="flex-auto">
+                        <button class="add-section" mat-flat-button>
+                            W
+                           
+                        </button>
+                    </div>
+                    <div class="flex-auto">
+                        <button class="add-section" mat-flat-button>
+                            In
+                           
+                        </button>
+                    </div>
+                    <div class="flex-auto">
+                        <button class="add-section" mat-flat-button>
+                            <mat-icon [svgIcon]="'mat_outline:facebook'" style="color:blue !important"></mat-icon>
+                        </button>
+                    </div>
+                    <div class="flex-auto">
+                        <button class="add-section" mat-flat-button>
+                            <mat-icon [svgIcon]="'feather:twitter'" style="color:blue !important"></mat-icon>
+                        </button>
+                    </div> -->
+
+
+                </div>
+                <div class="flex mt-5">
+                    <div>
+                        <mat-icon class="mr-5" [svgIcon]="'email'"></mat-icon>
+                    </div>
+                    <div class="flex-full">
+                        <u class="link">{{sideData.email||'-'}}</u>
+                    </div>
+                </div>
+                <div class="flex mt-5">
+                    <div>
+                        <mat-icon class="mr-5" [svgIcon]="'call'"></mat-icon>
+                    </div>
+                    <div class="flex-full">
+                        <u class="link">{{sideData.mobile||'-'}}</u>
+                    </div>
+                </div>
+                <div class="flex mt-5">
+                    <div>
+                        <mat-icon class="mr-5" [svgIcon]="'feather:settings'"></mat-icon>
+                    </div>
+                    <div class="flex-full">
+                        {{sideData.keyskills||'-'}}
+                    </div>
+                </div>
+                <div class="flex mt-5">
+                    <div>
+                        <mat-icon class="mr-5" [svgIcon]="'location_on'"></mat-icon>
+                    </div>
+                    <div class="flex-full">
+                        {{sideData.currentcity || '-'}}, India
+                    </div>
+                </div>
+                <div class="flex mt-5">
+                    <div>
+                        <mat-icon class="mr-5" [svgIcon]="'heroicons_outline:academic-cap'"></mat-icon>
+                    </div>
+                    <div class="flex-full">
+                        {{sideData.highestdegree || '-'}}
+                    </div>
+                </div>
+                <div class="flex mt-5">
+                    <div>
+                        <mat-icon class="mr-5" [svgIcon]="'mat_outline:local_mall'"></mat-icon>
+                    </div>
+                    <div class="flex-full">
+                        {{sideData.workexperience || '-'}}
+                    </div>
+                </div>
+
+                <div class="flex mt-5" style="text-align: center;">
+                    <div class="flex-auto">
+                        <mat-icon *ngIf="sideData.resumeurl" [svgIcon]="'check_circle'" [ngStyle]="{'color':'#5850ec'}">
+                        </mat-icon>
+                        <mat-icon *ngIf="!sideData.resumeurl" [svgIcon]="'feather:circle'"></mat-icon>
+                        <div style="font-size: 12px;text-align: center;">Resume<br> downloaded
+                        </div>
+                    </div>
+                    <div class="flex-auto">
+                        <mat-icon *ngIf="sideData.interested" [svgIcon]="'check_circle'" [ngStyle]="{'color':'#5850ec'}"></mat-icon>
+                        <mat-icon *ngIf="!sideData.interested" [svgIcon]="'feather:circle'"></mat-icon>
+                        <div style="font-size: 12px;text-align: center;">Right to<br> Represent
+                        </div>
+                    </div>
+                    <div class="flex-auto">
+                        <mat-icon *ngIf="sideData.video" [svgIcon]="'check_circle'" [ngStyle]="{'color':'#5850ec'}">
+                        </mat-icon>
+                        <mat-icon *ngIf="!sideData.video" [svgIcon]="'feather:circle'"></mat-icon>
+                        <div style="font-size: 12px;text-align: center;">Video
+                        </div>
+                    </div>
+                    <div class="flex-auto">
+                        <mat-icon *ngIf="sideData.isqualified" [svgIcon]="'check_circle'" [ngStyle]="{'color':'#5850ec'}"></mat-icon>
+                        <mat-icon *ngIf="!sideData.isqualified" [svgIcon]="'feather:circle'"></mat-icon>
+                        <div style="font-size: 12px;text-align: center;">Qualified
+                        </div>
+                    </div>
+                    <div class="flex-auto">
+                        <mat-icon *ngIf="sideData.issubmited" [svgIcon]="'check_circle'" [ngStyle]="{'color':'#5850ec'}"></mat-icon>
+                        <mat-icon *ngIf="!sideData.issubmited" [svgIcon]="'feather:circle'"></mat-icon>
+                        <div style="font-size: 12px;text-align: center;">Submitted
+                        </div>
+                    </div>
+                </div>
+                <div class="flex mt-5" style="text-align: center;">
+                    <div class="flex-auto p-2">
+                        <div>
+                            <strong style="float: left;">Relevance</strong> <span style="float: right;">{{sideData.relevance*100|number:'1.0-2'}}%</span>
+                        </div><br>
+                        <div *ngIf="persentageCalculation(sideData.relevance)<30 " class="flex  mt-3 items-end w-full h-3 bg-gray-200 rounded overflow-hidden ">
+                            <span class="flex h-full bg-red-800 " [style.width]="persentageCalculation(sideData.relevance)+ '%' "></span>
+                        </div>
+                        <div *ngIf="persentageCalculation(sideData.relevance)>=30 && persentageCalculation(sideData.relevance)<60 " class="flex  mt-3 items-end w-full h-3 bg-gray-200 rounded overflow-hidden ">
+                            <span class="flex h-full bg-orange-400 " [style.width]="persentageCalculation(sideData.relevance)+ '%' "></span>
+                        </div>
+                        <div *ngIf="persentageCalculation(sideData.relevance)>=60 " class="flex  mt-3 items-end w-full h-3 bg-gray-200 rounded overflow-hidden ">
+                            <span class="flex h-full bg-green-400 " [style.width]="persentageCalculation(sideData.relevance)+ '%' "></span>
+                        </div>
+
+                        <!-- <mat-progress-bar class="mt-3 rounded-full h-3" [mode]="'determinate'" [color]="'warm'" [value]="sideData.relevance*100">
+                        </mat-progress-bar> -->
+                    </div>
+                    <div class="flex-auto p-2">
+                        <div>
+                            <strong style="float: left;">Willingness</strong> <span style="float: right;">{{sideData.willingness*100|number:'1.0-2'}}%</span>
+                        </div><br>
+
+                        <div *ngIf="persentageCalculation(sideData.willingness)<30 " class="flex  mt-3 items-end w-full h-3 bg-gray-200 rounded overflow-hidden ">
+                            <span class="flex h-full bg-red-800 " [style.width]="persentageCalculation(sideData.willingness)+ '%' "></span>
+                        </div>
+                        <div *ngIf="persentageCalculation(sideData.willingness)>=30 && persentageCalculation(sideData.willingness)<60 " class="flex  mt-3 items-end w-full h-3 bg-gray-200 rounded overflow-hidden ">
+                            <span class="flex h-full bg-orange-400 " [style.width]="persentageCalculation(sideData.willingness)+ '%' "></span>
+                        </div>
+                        <div *ngIf="persentageCalculation(sideData.willingness)>=60 " class="flex  mt-3 items-end w-full h-3 bg-gray-200 rounded overflow-hidden ">
+                            <span class="flex h-full bg-green-400 " [style.width]="persentageCalculation(sideData.willingness)+ '%' "></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex mt-5" style="text-align: center;">
+                    <div class="flex-auto p-2">
+                        <div>
+                            <strong style="float: left;">POS</strong> <span style="float: right;">{{sideData.pos*100|number:'1.0-2'}}%</span>
+                        </div><br>
+
+                        <div *ngIf="persentageCalculation(sideData.pos)<30 " class="flex  mt-3 items-end w-full h-3 bg-gray-200 rounded overflow-hidden ">
+                            <span class="flex h-full bg-red-800 " [style.width]="persentageCalculation(sideData.pos)+ '%' "></span>
+                        </div>
+                        <div *ngIf="persentageCalculation(sideData.pos)>=30 && persentageCalculation(sideData.pos)<60 " class="flex  mt-3 items-end w-full h-3 bg-gray-200 rounded overflow-hidden ">
+                            <span class="flex h-full bg-orange-400 " [style.width]="persentageCalculation(sideData.pos)+ '%' "></span>
+                        </div>
+                        <div *ngIf="persentageCalculation(sideData.pos)>=60 " class="flex  mt-3 items-end w-full h-3 bg-gray-200 rounded overflow-hidden ">
+                            <span class="flex h-full bg-green-400 " [style.width]="persentageCalculation(sideData.pos)+ '%' "></span>
+                        </div>
+                    </div>
+                    <div class="flex-auto p-2">
+                        <div>
+                            <strong style="float: left;">Overall</strong> <span style="float: right;">{{sideData.overall*100|number:'1.0-2'}}%</span>
+                        </div><br>
+
+                        <div *ngIf="persentageCalculation(sideData.overall)<30 " class="flex  mt-3 items-end w-full h-3 bg-gray-200 rounded overflow-hidden ">
+                            <span class="flex h-full bg-red-800 " [style.width]="persentageCalculation(sideData.overall)+ '%' "></span>
+                        </div>
+                        <div *ngIf="persentageCalculation(sideData.overall)>=30 && persentageCalculation(sideData.overall)<60 " class="flex  mt-3 items-end w-full h-3 bg-gray-200 rounded overflow-hidden ">
+                            <span class="flex h-full bg-orange-400 " [style.width]="persentageCalculation(sideData.overall)+ '%' "></span>
+                        </div>
+                        <div *ngIf="persentageCalculation(sideData.overall)>=60 " class="flex  mt-3 items-end w-full h-3 bg-gray-200 rounded overflow-hidden ">
+                            <span class="flex h-full bg-green-400 " [style.width]="persentageCalculation(sideData.overall)+ '%' "></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class=" flex-auto pr-3 ">
+                        <button style="color: #4f46e5; " (click)="showVideo()" class=" add-section " [color]=" 'lightgray' " mat-flat-button>
+                            <mat-icon [svgIcon]=" 'iconsmind:video_5' "></mat-icon> &nbsp; Interview video
+                        </button>
+                    </div>
+                    <div class="flex-auto pr-3 ">
+                        <button style="color: #4f46e5;" (click)="download(sideData.uri)" class=" add-section " [color]=" 'lightgray' " mat-flat-button>
+                            <mat-icon [svgIcon]=" 'dripicons:arrow-down' "></mat-icon> &nbsp; Download Resume
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </mat-drawer>
+
+        <mat-drawer-content>
+
+            <div class="main ">
+
+                <div class="header ">
+                    <div class="title ">
+                        <a [routerLink]="'/jobs/viewjobs'"> <strong class="link" onclick="back()">
+                                <span style="font-size: 12px;position: relative;top: -1px;margin-right: 5px;">❮ </span>
+                                All
+                                Jobs
+                            </strong></a>
+                        <h1>{{rows.length>0?rows[0].title:''}}</h1>
+
+                    </div>
+
+                    <div class="main-actions ">
+                        <span class="search ">
+
+                            <mat-form-field class="treo-mat-dense treo-mat-no-subscript ">
+                                <mat-icon matPrefix [svgIcon]=" 'search' "></mat-icon>
+                                <input matInput [autocomplete]=" 'off' " [(ngModel)]="filterObj.search "
+                                    (ngModelChange)="search() " [placeholder]=" 'Search Candidates' ">
+                            </mat-form-field>
+
+                        </span>
+
+                        <button class="add-section" (click)="export()" mat-flat-button [color]=" 'primary' ">
+                            <mat-icon [svgIcon]=" 'heroicons_solid:download' "></mat-icon>
+                            Export
+                        </button>
+                        <button class="add-section ml-2" (click)="submissionEmail()" mat-flat-button [color]=" 'primary' ">
+                            <mat-icon [svgIcon]=" 'heroicons_solid:upload' "></mat-icon>
+                            Submission Email
+                        </button>
+                        <button class="add-section ml-2" (click)="uploadPortal()" mat-flat-button [color]=" 'primary' ">
+                            <mat-icon [svgIcon]=" 'heroicons_solid:upload' "></mat-icon>
+                            Portal Upload
+                        </button>
+
+
+
+
+                    </div>
+
+                </div>
+
+                <div class="p-5">
+                    <div class=" flex " style="float: right;">
+
+                        <div class="flex-auto">
+                            <button class="add-section" mat-flat-button (click)="openDialog('Whatsapp',{},'multi')">
+                                <i title="Send Whatsapp" style="cursor: pointer;margin-right: 10px; color: green"
+                                    class="fa fa-whatsapp fa-2x" aria-hidden="true"></i>
+                                <!-- <mat-icon [svgIcon]="'heroicons_solid:whatsapp'"></mat-icon> -->
+                            </button>
+                        </div>
+                        <div class="flex-auto">
+                            <button class="add-section" mat-flat-button>
+                                <i title="Send Linkedin" style="cursor: pointer;margin-right: 10px;"
+                                    class="fa fa-linkedin-square fa-2x  text-blue" aria-hidden="true"></i>
+                                <!-- <mat-icon [svgIcon]="'heroicons_solid:linkedin'"></mat-icon> -->
+                            </button>
+                        </div>
+                        <div class="flex-auto">
+                            <button class="add-section" (click)="openDialog('Email',{},'multi')" mat-flat-button>
+                                <mat-icon [svgIcon]="'email'" style="color:#4f46e5 !important">
+                                </mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <table mat-table [dataSource]="rows " style="width: 100%; ">
+
+                        <ng-container matColumnDef="option">
+                            <th mat-header-cell class="p-2" *matHeaderCellDef>
+                                <input type="checkbox" (click)="selectAll()">
+                            </th>
+                            <td mat-cell class="p-2" *matCellDef="let element ">
+                                <input type="checkbox" [(ngModel)]="element.isSelected" [checked]="element.isSelected">
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell class="p-2" *matHeaderCellDef> Name </th>
+                            <td mat-cell class="p-2" *matCellDef="let element ">
+                                <u (click)="details(element) " style="color: blue;cursor: pointer; ">{{element.name?element.name:element.email}}</u>
+                            </td>
+                        </ng-container>
+
+                        <!-- <ng-container matColumnDef="keyskills">
+                            <th class="w-1/4 p-2" mat-header-cell *matHeaderCellDef> Key Skills </th>
+                            <td class="w-1/4 p-2" mat-cell *matCellDef="let element">
+                                {{element.keyskills}}
+                            </td>
+                        </ng-container> -->
+
+                        <ng-container matColumnDef="relevance">
+                            <th mat-header-cell class="p-2" *matHeaderCellDef> Relevance </th>
+                            <td mat-cell class="p-2" *matCellDef="let element">
+                                <span class="flex items-center">
+                                    <span class="min-w-4 ">{{element.relevance*100|number:'1.0-1'}}%</span>
+                                <span *ngIf="persentageCalculation(element.relevance)<40 " class="flex items-end ml-2 w-1 h-8 bg-gray-200 rounded overflow-hidden ">
+                                        <span class="flex w-full bg-red-800 "
+                                            [style.height]="persentageCalculation(element.relevance)+ '%' "></span>
+                                </span>
+                                <span *ngIf="persentageCalculation(element.relevance)>=30 && persentageCalculation(element.relevance)
+                    <60 " class="flex items-end ml-2 w-1 h-8 bg-orange-200 rounded overflow-hidden ">
+                                        <span class="flex w-full bg-orange-400 "
+                                            [style.height]="persentageCalculation(element.relevance)+ '%' "></span>
+                                </span>
+                                <span *ngIf="persentageCalculation(element.relevance)>=60" class="flex items-end ml-2 w-1 h-8 bg-green-200 rounded overflow-hidden">
+                                        <span class="flex w-full bg-green-400"
+                                            [style.height]="persentageCalculation(element.relevance)+'%'"></span>
+                                </span>
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="willingness">
+                            <th mat-header-cell class="p-2" *matHeaderCellDef> Willingness </th>
+                            <td mat-cell class="p-2" *matCellDef="let element">
+                                <span class="flex items-center">
+                                    <span class="min-w-4">{{element.willingness*100|number:'1.0'}}%</span>
+                                <span *ngIf="persentageCalculation(element.willingness)<30" class="flex items-end ml-2 w-1 h-8 bg-gray-200 rounded overflow-hidden">
+                                        <span class="flex w-full bg-red-800"
+                                            [style.height]="persentageCalculation(element.willingness)+'%'"></span>
+                                </span>
+                                <span *ngIf="persentageCalculation(element.willingness)>=30 && persentageCalculation(element.willingness)<60" class="flex items-end ml-2 w-1 h-8 bg-orange-200 rounded overflow-hidden">
+                                        <span class="flex w-full bg-orange-400"
+                                            [style.height]="persentageCalculation(element.willingness)+'%'"></span>
+                                </span>
+                                <span *ngIf="persentageCalculation(element.willingness)>=60" class="flex items-end ml-2 w-1 h-8 bg-green-200 rounded overflow-hidden">
+                                        <span class="flex w-full bg-green-400"
+                                            [style.height]="persentageCalculation(element.willingness)+'%'"></span>
+                                </span>
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="pos">
+                            <th mat-header-cell class="p-2" *matHeaderCellDef> POS </th>
+                            <td mat-cell class="p-2" *matCellDef="let element">
+                                <span class="flex items-center">
+                                    <span class="min-w-4">{{element.pos*100|number:'1.0'}}%</span>
+                                <span *ngIf="persentageCalculation(element.pos)<30" class="flex items-end ml-2 w-1 h-8 bg-gray-200 rounded overflow-hidden">
+                                        <span class="flex w-full bg-red-800"
+                                            [style.height]="persentageCalculation(element.pos)+'%'"></span>
+                                </span>
+                                <span *ngIf="persentageCalculation(element.pos)>=30 && persentageCalculation(element.pos)<60" class="flex items-end ml-2 w-1 h-8 bg-orange-200 rounded overflow-hidden">
+                                        <span class="flex w-full bg-orange-400"
+                                            [style.height]="persentageCalculation(element.pos)+'%'"></span>
+                                </span>
+                                <span *ngIf="persentageCalculation(element.pos)>=60" class="flex items-end ml-2 w-1 h-8 bg-green-200 rounded overflow-hidden">
+                                        <span class="flex w-full bg-green-400"
+                                            [style.height]="persentageCalculation(element.pos)+'%'"></span>
+                                </span>
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="source">
+                            <th class="p-2" mat-header-cell *matHeaderCellDef> Source </th>
+                            <td class="p-2" mat-cell *matCellDef="let element">
+                                {{element.source}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="status">
+                            <th class="p-2" style="text-align: center;" mat-header-cell *matHeaderCellDef> Status </th>
+                            <td class="p-2" mat-cell *matCellDef="let element">
+                                <!-- {{element.status}} -->
+                                <div class="flex mt-5" style="text-align: center;">
+                                    <div class="flex-auto p-2">
+                                        <mat-icon *ngIf="element.resumeurl" [svgIcon]="'check_circle'" [ngStyle]="{'color':'#5850ec'}"></mat-icon>
+                                        <mat-icon *ngIf="!element.resumeurl" [svgIcon]="'feather:circle'"></mat-icon>
+                                        <div style="font-size: 12px;text-align: center;">Resume<br> downloaded
+                                        </div>
+                                    </div>
+                                    <div class="flex-auto p-2">
+                                        <mat-icon *ngIf="element.interested" [svgIcon]="'check_circle'" [ngStyle]="{'color':'#5850ec'}"></mat-icon>
+                                        <mat-icon *ngIf="!element.interested" [svgIcon]="'feather:circle'"></mat-icon>
+                                        <div style="font-size: 12px;text-align: center;">Right to<br> Represent
+                                        </div>
+                                    </div>
+                                    <div class="flex-auto p-2">
+                                        <mat-icon *ngIf="element.video" [svgIcon]="'check_circle'" [ngStyle]="{'color':'#5850ec'}"></mat-icon>
+                                        <mat-icon *ngIf="!element.video" [svgIcon]="'feather:circle'"></mat-icon>
+                                        <div style="font-size: 12px;text-align: center;">Video
+                                        </div>
+                                    </div>
+                                    <div class="flex-auto p-2">
+                                        <mat-icon *ngIf="element.isqualified" [svgIcon]="'check_circle'" [ngStyle]="{'color':'#5850ec'}"></mat-icon>
+                                        <mat-icon *ngIf="!element.isqualified" [svgIcon]="'feather:circle'"></mat-icon>
+                                        <div style="font-size: 12px;text-align: center;">Qualified
+                                        </div>
+                                    </div>
+                                    <div class="flex-auto p-2">
+                                        <mat-icon *ngIf="element.issubmited" [svgIcon]="'check_circle'" [ngStyle]="{'color':'#5850ec'}"></mat-icon>
+                                        <mat-icon *ngIf="!element.issubmited" [svgIcon]="'feather:circle'"></mat-icon>
+                                        <div style="font-size: 12px;text-align: center;">Submitted
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions">
+                            <th class="p-2" style="text-align: center;" mat-header-cell *matHeaderCellDef> Actions </th>
+                            <td class="p-2" mat-cell *matCellDef="let element">
+                                <div class=" flex ">
+
+                                    <div class="flex-auto">
+                                        <button class="add-section" mat-flat-button (click)="openDialog('Whatsapp',element,'single')">
+                                            <i *ngIf="element.wainterested == 'NA'" title="Send Whatsapp"
+                                                style="cursor: pointer;margin-right: 10px; color:green"
+                                                class="fa fa-whatsapp fa-2x" aria-hidden="true"></i>
+                                            <i *ngIf="element.wainterested == 'sent'" title="Send Whatsapp"
+                                                style="cursor: pointer;margin-right: 10px; color: gray"
+                                                class="fa fa-whatsapp fa-2x" aria-hidden="true"></i>
+                                            <i *ngIf="element.wainterested == 'interested'" title="Send Whatsapp"
+                                                style="cursor: pointer;margin-right: 10px; color:  blue"
+                                                class="fa fa-whatsapp fa-2x" aria-hidden="true"></i>
+                                            <!-- <mat-icon [svgIcon]="'heroicons_solid:whatsapp'"></mat-icon> -->
+                                        </button>
+                                    </div>
+                                    <div class="flex-auto">
+                                        <button class="add-section" mat-flat-button>
+                                            <i title="Send Linkedin" style="cursor: pointer;margin-right: 10px;"
+                                                class="fa fa-linkedin-square fa-2x  text-blue" aria-hidden="true"></i>
+                                            <!-- <mat-icon svgIcon="feather:linkedin"></mat-icon> -->
+                                        </button>
+                                    </div>
+                                    <div class="flex-auto">
+                                        <button class="add-section" (click)="openDialog('Email',element,'single')" mat-flat-button>
+                                            <mat-icon [svgIcon]="'email'" style="color:blue !important">
+                                            </mat-icon>
+                                        </button>
+                                    </div>
+                                    <div class="flex-auto">
+                                        <button class="add-section" mat-flat-button (click)="clickToCall({phone:element.mobile, talentid:element.id, jobid:element.jobid, talentrequestid:element.talentrequestid})">
+                                            <mat-icon svgIcon="mat_outline:add_ic_call" style="color:blue !important">
+                                            </mat-icon>
+                                        </button>
+                                    </div>
+
+
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <mat-paginator [length]="temp.length" [pageSizeOptions]="[5,6,7,8,9,10,15,20]" [showFirstLastButtons]="true" (page)="getPage($event.pageIndex,$event.pageSize)">
+                    </mat-paginator>
+                </div>
+
+
+
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+</div>

@@ -1,0 +1,14 @@
+<h3>{{data.title}}</h3>
+<div *ngIf="data.title=='Confirmation'">
+    <h4>Do you want to {{data.isactive?'deactivate':'activate'}} this user</h4>
+    <br>
+    <div style="margin-top: 20px;">
+        <button class="add-task" (click)="closeDialog()" mat-flat-button [color]="'primary'">
+            Close
+        </button>
+        <button class="add-task" (click)="update()" mat-flat-button [color]="'primary'">
+            Yes
+        </button>
+
+    </div>
+</div>

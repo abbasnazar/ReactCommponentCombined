@@ -1,0 +1,36 @@
+<h3>{{data.title}} City</h3>
+<div>
+    <mat-form-field class="treo-mat-dense treo-mat-no-subscript">
+        <select matNativeControl [(ngModel)]="data.countryid">
+            <option value="undefined">Select</option>
+            <option *ngFor="let s of stateList|unique:'countryid'" value="{{s.countryid}}">{{s.countryName}}</option>
+        </select>
+    </mat-form-field>
+    <br><br>
+    <mat-form-field class="treo-mat-dense treo-mat-no-subscript">
+        <select matNativeControl [(ngModel)]="data.stateid">
+            <option value="undefined">Select</option>
+            <option *ngFor="let state of stateList|filter:{'countryid':data.countryid}" value="{{state.id}}">
+                {{state.name}}</option>
+        </select>
+    </mat-form-field>
+    <br><br>
+    <mat-form-field class="treo-mat-dense treo-mat-no-subscript">
+        <input matInput [(ngModel)]="data.name" [placeholder]="'city'">
+    </mat-form-field><br>
+
+
+    <div style="margin-top: 20px;">
+        <button *ngIf="data.title=='Update'" class="add-task" (click)="update()" mat-flat-button [color]="'primary'">
+            Update
+        </button>
+        <button *ngIf="data.title=='Add'" class="add-task" (click)="submit()" mat-flat-button [color]="'primary'">
+            Submit
+        </button>
+
+        <!-- Add task button -->
+        <button class="add-section" (click)="closeDialog()" mat-flat-button [color]="'primary'">
+            Close
+        </button>
+    </div>
+</div>

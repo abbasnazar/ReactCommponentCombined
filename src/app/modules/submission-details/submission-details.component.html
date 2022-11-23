@@ -1,0 +1,101 @@
+<div class="content-layout fullwidth-basic-normal-scroll">
+    <div *ngIf="!isError" style="overflow: auto;">
+        <div>
+            <h2>Submission Details</h2>
+        </div>
+        <ngx-datatable #myTable class="material" [rows]='rows' [limit]="10" [columnMode]="'force'" [scrollbarH]="true" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'">
+
+            <ngx-datatable-column name="Candidate Name" *ngIf="showColumn['Candidate Name']">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{row.name}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Mobile" *ngIf="showColumn['Mobile']">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{row.mobile}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Email ID" *ngIf="showColumn['Email ID']">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{row.email}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Agency Name/ Vendor name" *ngIf="showColumn['Agency Name/ Vendor name']">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{row.vender}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Current Location" *ngIf="showColumn['Current Location']">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{row.currentcity}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Skill" *ngIf="showColumn['Skill']">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{row.keyskills}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Preferred Location" *ngIf="showColumn['Preferred Location']">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{row.preferredlocation}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Total Yr of Work Exp" *ngIf="showColumn['Total Yr of Work Exp']">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{row.totalexperienceyear?row.totalexperienceyear:0}}.{{row.totalexperiencemonth?row.totalexperiencemonth:0}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Current Payroll Company" *ngIf="showColumn['Current Payroll Company']">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{row.payroll}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Highest Education" *ngIf="showColumn['Highest Education']">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{row.highestdegree}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Pancard Number" *ngIf="showColumn['Pancard Number']">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{row.panno}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Internal POC" *ngIf="showColumn['Internal POC']">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{row.poc}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Panels" *ngIf="showColumn['Panels']">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{row.pannel}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Current CTC" *ngIf="showColumn['Current CTC']">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{row.ctc}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+
+        </ngx-datatable>
+
+
+    </div>
+    <div *ngIf="isError" style="margin: auto;">
+        <h1>Ooops... 404!</h1>
+        <h6>The page you requested could not be found.</h6>
+    </div>
+</div>

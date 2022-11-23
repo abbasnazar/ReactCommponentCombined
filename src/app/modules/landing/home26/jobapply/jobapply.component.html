@@ -1,0 +1,229 @@
+<div class="container border">
+  <form>
+    <header>
+      <div class="container-fluid">
+        <div class="row tabview mt-1">
+          <nav class="navbar navbar-light" style="background-color: #1e293b">
+            <!-- <div class="container-fluid "> -->
+            <!-- <div class="row"> -->
+            <div class="col-md-5 offset-md-1">
+              <a routerLink="../../home"
+                ><img
+                  src="../assets/images/logo/img.png"
+                  alt=""
+                  width="210"
+                  height="54"
+              /></a>
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                  <form class="d-flex m-4">
+                    <!-- <a  class="button1 mx-5" routerLink="/sign-in"><span class="Add1"> Login </span></a> -->
+                    <button
+                      class="btn btn-light btn-sm sec-btn mr-3"
+                      routerLink="/sign-in"
+                      role="button"
+                    >
+                      Login
+                    </button>
+                    <button
+                      class="btn btn-primary btn-sm sec-btn"
+                      routerLink="/requestTrial"
+                      role="button"
+                    >
+                      Request a Trial
+                    </button>
+                    <!-- <a class="button2" routerLink="/requestTrial">
+            <span class="Add2" > Request a Trial </span>ss
+          </a> -->
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
+            <!-- </div> -->
+          </nav>
+        </div>
+      </div>
+    </header>
+    <div class="row">
+      <div class="col-md-6 my-5">
+        <!-- Default form contact -->
+        <form
+          class="text-center border border-light p-5 needs-validation"
+          novalidate
+          [formGroup]="contactForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <p class="h4 mb-4 text-dark">Apply for Jobs</p>
+          <hr class="text-success">
+          <!-- <a href="http://localhost:3000" > -->
+            <a href="http://34.131.149.30:8000/" >
+          <button
+          mdbBtn
+          color="info"
+          outline="true"
+          block="true"
+          class="btn btn-primary btn-lg waves-light mb-4 mt-2"
+          mdbWavesEffect
+          type="button"
+        >
+        Upload Resume Only
+        </button></a>
+        <hr class="text-success">
+        <h5 class="text-success"> "OR" </h5>
+          <p class="h4 mb-4">Apply for Jobs</p>
+
+          <!-- Name -->
+          <input
+            type="text"
+            formControlName="req_name"
+            id="defaultContactFormName"
+            mdbInputDirective
+            class="form-control mb-4"
+            placeholder="Name"
+            [(ngModel)]="userDetails.name"
+          />
+
+          <!-- Email -->
+          <input
+            type="email"
+            formControlName="req_email"
+            id="defaultContactFormEmail"
+            mdbInputDirective
+            class="form-control mb-4"
+            placeholder="E-mail"
+            aria-required="true"
+            [(ngModel)]="userDetails.email"
+          />
+
+          <!-- Phone Number  -->
+          <input
+            type="phone number"
+            formControlName="req_phn"
+            id="defaultContactFormPhoneNumber"
+            mdbInputDirective
+            class="form-control mb-4"
+            placeholder="Mobile Number"
+            [(ngModel)]="userDetails.mobile"
+          />
+
+          <!-- Subject -->
+          <!-- <label>Subject</label>
+    <select formControlName="contactFormSubjects" class="browser-default custom-select mb-4">
+      <option value="" disabled>Choose option</option>
+      <option value="1" selected>Feedback</option>
+      <option value="2">Report a bug</option>
+      <option value="3">Feature request</option>
+      <option value="4">Feature request</option>
+    </select> -->
+
+          <!-- Message -->
+
+          <div class="form-group">
+            <textarea
+              formControlName="req_msg"
+              class="form-control rounded-0"
+              mdbInputDirective
+              id="exampleFormControlTextarea2"
+              rows="3"
+              placeholder="Message"
+            ></textarea>
+          </div>
+
+          <!-- <div class="file-field md-form mt-3">
+        <div class="btn text-dark btn-sm waves-light" mdbWavesEffect>
+          <span>Choose file</span>
+          <input type="file" >
+        </div>
+        <div class="file-path-wrapper ">
+          <input class="file-path" formControlName="req_uploadFile" type="text" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                text/plain, application/pdf" > -->
+
+          <div class="btn text-dark btn-sm waves-light p-5 mdbWavesEffect">
+            <label for="formFileSm" class="form-label">Upload Resume</label>
+            <input
+              class="form-control form-control-sm" (change)="getFile($event.target.files[0])"
+              formControlName="req_uploadFile"
+              id="formFileSm"
+              type="file"
+              accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+text/plain, application/pdf"
+              [(ngModel)]="userDetails.filename"
+            />
+
+            <!-- </div>
+      </div> -->
+            <!-- Copy -->
+            <!-- <div class="custom-control custom-checkbox mb-4">
+      <input formControlName="contactFormCopy" type="checkbox" class="custom-control-input" id="defaultContactFormCopy">
+      <label class="custom-control-label" for="defaultContactFormCopy">Send me a copy of this message</label>
+    </div> -->
+
+            <!-- Send button -->
+
+            <button
+              mdbBtn
+              color="info"
+              outline="true"
+              block="true"
+              class="btn btn-primary btn-sm waves-light mt-4"
+              mdbWavesEffect
+              type="submit"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+        <!-- Default form contact -->
+      </div>
+      <div class="col-md-3 my-5 ml-30 h-50 shadow-lg">
+        <hr />
+        <img
+          src="assets/images/job.jpg"
+          class="img-thumbnail h-150 w-100"
+
+          class="img-thumbnail h-90 w-100"
+          alt="..."
+        />
+        <hr />
+      </div>
+    </div>
+    <hr />
+    <footer
+      class="page-footer font-small mdb-color darken-3 pt-4"
+      style="background-color: #1e293b"
+    >
+      <!-- Footer Elements -->
+      <div class="container">
+        <!--Grid row-->
+        <div class="row d-flex justify-content-center">
+          <!--Grid column-->
+          <div class="col-md-2">
+            <!-- Video -->
+            <div class="embed-responsive embed-responsive-16by9 mb-2">
+              <img
+                src="../../../assets/images/logo/img.png"
+                alt=""
+                width="240"
+                height="70"
+              />
+            </div>
+          </div>
+          <!--Grid column-->
+        </div>
+        <!--Grid row-->
+      </div>
+      <!-- Footer Elements -->
+
+      <!-- Copyright -->
+      <div class="footer-copyright text-center py-1 mb-2 text-light pr-4">
+        D-108,sector-63,Noida<br />
+        © 2021.All rights reserved
+      </div>
+      <!-- Copyright -->
+    </footer>
+  </form>
+</div>

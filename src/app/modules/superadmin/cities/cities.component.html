@@ -1,0 +1,95 @@
+<div class="content-layout fullwidth-basic-normal-scroll">
+
+    <!-- Main -->
+    <div class="main">
+
+        <!-- Header -->
+        <div class="header">
+
+            <!-- Title -->
+            <div class="title">
+
+                <h1>Cities</h1>
+
+                <div class="remaining-tasks-count">
+                    <span>{{temp.length}} Cities</span>
+                </div>
+
+            </div>
+
+            <!-- Main actions -->
+            <div class="main-actions">
+                <span class="search">
+
+                    <mat-form-field class="treo-mat-dense treo-mat-no-subscript">
+                        <mat-icon matPrefix [svgIcon]="'search'"></mat-icon>
+                        <input matInput [autocomplete]="'off'" [(ngModel)]="filterObj.search" (ngModelChange)="search()"
+                            [placeholder]="'Search Cities'">
+                    </mat-form-field>
+
+                </span>
+
+                <!-- Add section button -->
+                <button *ngIf="accessRight.addaccess" class="add-task" (click)="openDialog('Add')" mat-flat-button [color]="'primary'">
+                    <mat-icon [svgIcon]="'add'"></mat-icon>
+                    New City
+                </button>
+
+                <!-- Add task button -->
+                <button class="add-section" (click)="export()" mat-flat-button [color]="'primary'">
+                    <mat-icon [svgIcon]="'heroicons_solid:download'"></mat-icon>
+                    Export CSV File
+                </button>
+
+
+
+            </div>
+
+        </div>
+        <div class="p-4" *ngIf="rows.length>0">
+            <table mat-table [dataSource]="rows" class="mat-elevation-z8" style="width: 100%;">
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="state">
+                    <th mat-header-cell *matHeaderCellDef> State </th>
+                    <td mat-cell *matCellDef="let element"> {{element.stateName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="country">
+                    <th mat-header-cell *matHeaderCellDef> Country </th>
+                    <td mat-cell *matCellDef="let element"> {{element.countryName}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="createdon">
+                    <th mat-header-cell *matHeaderCellDef> Created on </th>
+                    <td mat-cell *matCellDef="let element"> {{element.createdon | date:'dd MMM y' || '-'}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button *ngIf="accessRight.editaccess" (click)="openDialog('Update',element)" style="color: blue;" class="add-section" mat-flat-button>
+                            <mat-icon svgIcon="edit"></mat-icon> &nbsp;
+                            Edit
+                        </button>
+
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [length]="temp.length" [pageSizeOptions]="[5,6,7,8,9,10,15,20]" [showFirstLastButtons]="true" (page)="getPage($event.pageIndex,$event.pageSize)">
+            </mat-paginator>
+        </div>
+
+    </div>
+
+</div>

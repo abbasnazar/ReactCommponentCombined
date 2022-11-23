@@ -1,0 +1,234 @@
+<div class="content-layout fullwidth-basic-normal-scroll">
+    <div class="main">
+
+        <!-- Header -->
+        <div class="header">
+
+            <!-- Title -->
+            <div class="title">
+                <strong class="link" onclick="back()">
+                    <span style="font-size: 12px;position: relative;top: -1px;margin-right: 5px;">❮ </span> Back
+                </strong>
+                <h1>Add Talent</h1>
+            </div>
+
+            <!-- Main actions -->
+            <div class="main-actions">
+
+                <button class="add-task" (click)="gotoTalentView()" mat-flat-button>
+                    Cancel
+                </button>
+
+                <!-- Add section button -->
+                <button class="add-task" (click)="submit()" mat-flat-button [color]="'primary'">
+                    <mat-icon [svgIcon]="'save'"></mat-icon>
+                    Save Talent
+                </button>
+
+
+            </div>
+
+        </div>
+        <!-- Basic Details  -->
+
+        <div class="m-8">
+            <h3>Basic Details</h3>
+            <div class="flex flex-col mt-8 p-8 pb-0 bg-card shadow rounded overflow-hidden">
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Name<span class="require">*</span></mat-label>
+                        <input matInput [(ngModel)]="talentObj.name" [placeholder]="'Applicant Name'">
+                        <mat-icon matPrefix [svgIcon]="'account_circle'"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Email<span class="require">*</span></mat-label>
+                        <input matInput [(ngModel)]="talentObj.email" [placeholder]="'Email'">
+                        <mat-icon matPrefix [svgIcon]="'email'"></mat-icon>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Mobile<span class="require">*</span></mat-label>
+                        <input matInput [(ngModel)]="talentObj.mobile" [placeholder]="'Mobile'">
+                        <mat-icon matPrefix [svgIcon]="'settings_cell'"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Alternate Mobile<span class="require">*</span></mat-label>
+                        <input matInput [(ngModel)]="talentObj.alternatemobile" [placeholder]="'Alternatemobile'">
+                        <mat-icon matPrefix [svgIcon]="'settings_cell'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Pan Number<span class="require">*</span></mat-label>
+                        <input matInput [(ngModel)]="talentObj.pan_number" [placeholder]="'Pan Number'">
+                        <mat-icon matPrefix [svgIcon]="'settings_cell'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>City<span class="require">*</span></mat-label>
+                        <input matInput [(ngModel)]="talentObj.currentcity" [placeholder]="'City'">
+                        <mat-icon matPrefix [svgIcon]="'location_on'"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Highest degree<span class="require">*</span></mat-label>
+                        <input matInput [(ngModel)]="talentObj.highestdegree" [placeholder]="'Highest degree'">
+                        <mat-icon matPrefix [svgIcon]="'heroicons_outline:academic-cap'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="gt-xs:pr-3 gt-xs:w-1/2">
+                        <mat-label>Facebook Link</mat-label>
+                        <input matInput [(ngModel)]="talentObj.facebook" [placeholder]="'Enter facebook link'">
+                    </mat-form-field>
+                    <mat-form-field class="gt-xs:pr-3 gt-xs:w-1/2">
+                        <mat-label>Linkedin Link</mat-label>
+                        <input matInput [(ngModel)]="talentObj.linkedin" [placeholder]="'Enter linked link'">
+                    </mat-form-field>
+                    <mat-form-field class="gt-xs:pr-3 gt-xs:w-1/2">
+                        <mat-label>Twitter Link</mat-label>
+                        <input matInput [(ngModel)]="talentObj.twitter" [placeholder]="'Enter twitter link'">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <!-- Employment Details -->
+
+        <div class="m-8">
+            <h3>Employment Details</h3>
+            <div class="flex flex-col mt-8 p-8 pb-0 bg-card shadow rounded overflow-hidden">
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="gt-xs:pr-3 gt-xs:w-1/2">
+                        <mat-label>Current Company<span class="require">*</span></mat-label>
+                        <input matInput [(ngModel)]="talentObj.currentcompany" [placeholder]="'Enter company Name'">
+                    </mat-form-field>
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Total Experience<span class="require">*</span></mat-label>
+                        <input matInput type="number" [(ngModel)]="talentObj.totalexperienceyear" [placeholder]="'Year'">
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label></mat-label>
+                        <input matInput type="number" [(ngModel)]="talentObj.totalexperiencemonth" [placeholder]="'Month'">
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="gt-xs:pr-3 gt-xs:w-1/2">
+                        <mat-label>Notice Period<span class="require">*</span></mat-label>
+                        <input matInput [(ngModel)]="talentObj.notice_period" [placeholder]="'Enter Notice Period'">
+                    </mat-form-field>
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Relevant Experience<span class="require">*</span></mat-label>
+                        <input matInput type="number" [(ngModel)]="talentObj.relevant_experience" [placeholder]="'Year'">
+                    </mat-form-field>
+
+                </div>
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="gt-xs:pr-3 gt-xs:w-1/2">
+                        <mat-label>Buy Rate<span class="require">*</span></mat-label>
+                        <input matInput [(ngModel)]="talentObj.buyrate" [placeholder]="'Buy Rate'">
+                    </mat-form-field>
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Date Of Birth<span class="require">*</span></mat-label>
+                        <input matInput [matDatepicker]="picker1" [(ngModel)]="talentObj.dateofbirth" [placeholder]="'Date Of Birth'">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+
+                </div>
+
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Select Source<span class="require">*</span></mat-label>
+                        <select matNativeControl [(ngModel)]="talentObj.sourceid">
+                            <option *ngFor="let source of sourceList" [value]="source.id">{{source.name}}</option>
+                        </select>
+                        <mat-icon matPrefix [svgIcon]="'dripicons:view-list'"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Available From<span class="require">*</span></mat-label>
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="talentObj.availablefrom" [placeholder]="'Available from'">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>                
+
+            </div>
+        </div>
+
+        <!-- Skills & Experience -->
+
+        <div class="m-8">
+            <h3>Skills & Experience</h3>
+            <div class="flex flex-col mt-8 p-8 pb-0 bg-card shadow rounded overflow-hidden">
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Skills<span class="require">*</span></mat-label>
+                        <mat-chip-list #chipList aria-label="Skills selection">
+                            <mat-chip *ngFor="let skill of selectedSkills" [selectable]="selectable" [removable]="removable" (removed)="remove(skill)">
+                                {{skill}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="New Skill" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                        </mat-chip-list>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex">
+                    <mat-form-field class="treo-mat-textarea flex-auto">
+                        <mat-label>Work experience(separate with (,)) <span class="require">*</span></mat-label>
+                        <textarea matInput [(ngModel)]="talentObj.workexperience" placeholder="Separate skills with comma" cdkTextareaAutosize cdkAutosizeMinRows="10"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <!-- <div class="flex flex-col mt-8 p-8 pb-0 bg-card shadow rounded overflow-hidden"> -->
+                <input type="file" id="file" (change)="getFile($event.target.files[0])" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                text/plain, application/pdf" style="display: none;">
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                            <mat-label>Upload Resume<span class="require">*</span></mat-label>
+                            <input matInput [(ngModel)]="talentObj.filename" disabled>
+                    </mat-form-field>
+                    <div class="flex-auto gt-xs:pr-3 gt-xs:pt-6">
+                        <button class="add-task" onclick="document.getElementById('file').click()" mat-flat-button [color]="'primary'">
+                            <mat-icon [svgIcon]="'attach_file'"></mat-icon>
+                            Select file
+                        </button><br><br>
+                    </div>
+
+                    <!-- </div> -->
+                </div>
+
+                <div class="flex flex-col gt-xs:flex-row">
+                    <div class="flex-auto w-1/2 pt-2 pr-2" *ngFor="let metadata of metaDataList;">
+                        <input-fields [isLabel]="true" [data]="metadata"></input-fields>
+                    </div>
+                </div><br>
+
+            </div>
+        </div>
+
+        <div class="header" style="background: transparent !important;">
+            <div class="main-actions">
+
+                <button class="add-task" (click)="gotoTalentView()" mat-flat-button>
+                    Cancel
+                </button>
+
+                <!-- Add section button -->
+                <button class="add-task" (click)="submit()" mat-flat-button [color]="'primary'">
+                    <mat-icon [svgIcon]="'save'"></mat-icon>
+                    Save Talent
+                </button>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

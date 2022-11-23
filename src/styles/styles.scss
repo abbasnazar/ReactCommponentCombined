@@ -1,0 +1,13 @@
+// -----------------------------------------------------------------------------------------------------
+// @ You can use this file to import custom styles.
+//
+// @ Styles from this file will override anything from 'vendors.scss' file allowing customizations and
+//  modifications of third party libraries.
+// -----------------------------------------------------------------------------------------------------
+@import '../../node_modules/font-awesome/css/font-awesome.min.css';
+@import '../../node_modules/@swimlane/ngx-datatable/index.css';
+@import '../../node_modules/@swimlane/ngx-datatable/themes/material.css';
+@import '../../node_modules/@swimlane/ngx-datatable/assets/icons.css';
+.ngx-datatable.material {
+    box-shadow: none !important;
+}

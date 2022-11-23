@@ -1,0 +1,85 @@
+<h3>{{data.title?data.title:'Confirmation'}} <span (click)="closeDialog()" style="float: right;cursor: pointer;">
+        X
+    </span></h3>
+
+<div *ngIf="!data.title">
+    <h5>Do you want to start {{data.data[0].type}} chat.</h5>
+    <br>
+    <div *ngIf="data.title !='Video'" style="margin-top: 20px;">
+        <button class="add-task" (click)="closeDialog()" mat-flat-button [color]="'primary'">
+            Close
+        </button>
+        <button class="add-task" (click)="submit()" mat-flat-button [color]="'primary'">
+            Yes
+        </button>
+    </div>
+</div>
+
+<div *ngIf="data.title=='Video'">
+    <div style="border:  1px solid lightblue;">
+        <video style="height: 60vh;width: 100%" src="{{getVideoPath()}}" frameborder="0" controls allowfullscreen></video>
+    </div>
+</div>
+
+<div *ngIf="data.title=='Email'">
+    <div style="border:  1px solid lightblue;max-height: 60vh;overflow: auto;">
+        <div style="border-bottom: 1px solid lightgray;padding: 10px;">
+            <strong>Subject : </strong>{{data.subject}}
+        </div>
+        <div style="padding: 10px;" [innerHTML]="parseHtml()">
+
+        </div>
+    </div>
+</div>
+
+<div *ngIf="data.title=='Reply'">
+    <div style="border:  1px solid lightblue;max-height: 60vh;overflow: auto;">
+        <div style="border-bottom: 1px solid lightgray;padding: 10px;">
+            <strong>Subject : </strong>{{data.subject}}
+        </div>
+        <div style="padding: 10px;">
+            <textarea [(ngModel)]="data.message" style="width: 100%;" rows="10"></textarea>
+        </div>
+
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="add-task" (click)="closeDialog()" mat-flat-button [color]="'primary'">
+            Close
+        </button>
+        <button class="add-task" (click)="emailReply()" mat-flat-button [color]="'primary'">
+            Send
+        </button>
+    </div>
+</div>
+
+<div *ngIf="data.title=='Applied Jobs'">
+    <h4>{{data.name}}</h4>
+    <div style="max-height: 60vh;width: 100%">
+        <ngx-datatable #myTable class="material" [rows]='appliedJobList' [limit]="10" [columnMode]="'force'" [scrollbarH]="true" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'">
+
+            <ngx-datatable-column name="Job Title" prop="title">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span (click)="profile(row)" class="link"> {{row.title}} </span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Company" prop="contactCompanyName">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.contactCompanyName}}
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Company Contact" prop="companyPersonsName">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.companyPersonsName}}
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Status" prop="Status">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.Status}}
+                </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+    </div>
+</div>

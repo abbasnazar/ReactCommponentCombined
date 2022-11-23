@@ -1,0 +1,228 @@
+<div class="content-layout fullwidth-basic-normal-scroll">
+    <mat-drawer-container>
+
+        <mat-drawer [mode]="'side'" [opened]="isOpen" [position]="'end'" [disableClose]="true" #matDrawer>
+
+            <div class="p-8 ">
+                <div class="w-full">
+                    <h3 style="float: left;" class="m-0">
+                        Client Name<br><span style="font-size: 18px;">{{licenseDetail.companyName}}</span></h3>
+
+                    <button style="float: right;" (click)="isOpen=false">
+                        <mat-icon>close</mat-icon>
+                    </button><br><br><br>
+                </div><br>
+
+                <div *ngIf="licenseDetail.data?.length == 0" class="flex flex-col flex-auto p-6 pb-4 bg-card rounded overflow-hidden" style="text-align: center;">
+                    <div style="font-size: 16px;"><br><br>
+                        <B>No users added against this License.</B>
+                    </div>
+                </div>
+                <div *ngIf="licenseDetail.data?.length != 0" class="mt-4 p-4 bg-card shadow rounded overflow-hidden">
+                    <div>
+                        <button style="float: right;margin-bottom: 30px;" class="add-section" [matMenuTriggerFor]="exportEmployee" mat-flat-button [color]="'primary'">
+                            <mat-icon [svgIcon]="'heroicons_solid:download'"></mat-icon>
+                            Export CSV File
+                        </button>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="flex flex-row gt-xs:flex-row pt-2">
+                        <div class="flex-auto gt-xs:w-3/4">
+                            <strong style="color: #64748b;">User</strong>
+                        </div>
+                        <div class="flex-auto gt-xs:w-1/4">
+                            <strong style="color: #64748b;">Status</strong>
+                        </div>
+                    </div><br>
+                </div>
+
+                <div *ngFor="let item of licenseDetail.data" class="flex flex-col shadow rounded overflow-hidden">
+
+                    <div class="flex flex-row gt-xs:flex-row pt-2">
+                        <div class="flex-auto gt-xs:w-3/4">
+                            {{item.email}}
+                        </div>
+                        <div class="flex-auto gt-xs:w-1/4">
+                            {{item.isactive?'Activated':'Deactivated'}}
+                        </div>
+                    </div><br>
+                </div>
+
+            </div>
+        </mat-drawer>
+
+        <mat-drawer-content>
+            <div class="main">
+
+                <!-- Header -->
+                <div class="header">
+
+                    <!-- Title -->
+                    <div class="title">
+
+                        <h1>Clients</h1>
+
+                        <div class="remaining-tasks-count">
+                            <span>{{rows.length}} Clients</span>
+                        </div>
+
+                    </div>
+
+                    <!-- Main actions -->
+                    <div class="main-actions">
+                        <span class="search">
+
+                            <mat-form-field class="treo-mat-dense treo-mat-no-subscript">
+                                <mat-icon matPrefix [svgIcon]="'search'"></mat-icon>
+                                <input matInput [autocomplete]="'off'" [(ngModel)]="filterObj.search"
+                                    (ngModelChange)="search()" [placeholder]="'Search Clients'">
+                            </mat-form-field>
+
+                        </span>
+
+                        <!-- Add section button -->
+                        <button class="add-task" *ngIf="accessRight.addaccess" (click)="goto('Add',{})" mat-flat-button [color]="'primary'">
+                            <mat-icon [svgIcon]="'add'"></mat-icon>
+                            New Client Signup
+                        </button>
+
+                        <!-- Add task button -->
+                        <button class="add-section" [matMenuTriggerFor]="export" mat-flat-button [color]="'primary'">
+                            <mat-icon [svgIcon]="'heroicons_solid:download'"></mat-icon>
+                            Export CSV File
+                        </button>
+
+                    </div>
+
+                    <mat-menu #menu="matMenu">
+                        <p *ngFor="let c of selectedColumn" (click)="$event.stopPropagation()" mat-menu-item>
+                            <input type="checkbox" [(ngModel)]="c.value" style="margin-right: 10px;"> {{c.name}}
+                        </p>
+                        <div mat-menu-item>
+                            <button (click)="updateViewMetadata()" mat-flat-button class="w-full" [color]="'primary'">Save</button>
+                        </div>
+                    </mat-menu>
+
+                    <mat-menu #export="matMenu">
+                        <p *ngFor="let c of exportColumn" (click)="$event.stopPropagation()" mat-menu-item>
+                            <input type="checkbox" [(ngModel)]="c.value" style="margin-right: 10px;"> {{c.name}}
+                        </p>
+                        <div mat-menu-item>
+                            <button (click)="exportExcel()" mat-flat-button class="w-full" [color]="'primary'">Export</button>
+                        </div>
+                    </mat-menu>
+
+                    <mat-menu #exportEmployee="matMenu">
+                        <p *ngFor="let c of exportEmployeeColumn" (click)="$event.stopPropagation()" mat-menu-item>
+                            <input type="checkbox" [(ngModel)]="c.value" style="margin-right: 10px;"> {{c.name}}
+                        </p>
+                        <div mat-menu-item>
+                            <button (click)="exportEmployeeExcel()" mat-flat-button class="w-full" [color]="'primary'">Export</button>
+                        </div>
+                    </mat-menu>
+
+                </div>
+                <div class="pr-4">
+                    <button style="float:right;" [color]="'primary'" mat-flat-button type="button" [matMenuTriggerFor]="menu">
+                        <mat-icon style="font-size: 20px;">settings</mat-icon> &nbsp; Settings
+                    </button>
+                </div><br>
+
+
+
+                <div style="margin-top: 25px;" *ngIf="rows.length>0">
+                    <ngx-datatable #myTable class="material" [rows]='rows' [limit]="10" [columnMode]="'force'" [scrollbarH]="true" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'">
+
+                        <ngx-datatable-column name="Client Name" prop="name" *ngIf="tableShowColumn['Client Name']">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.name}}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Admin ID" prop="email" *ngIf="tableShowColumn['Admin ID']">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.email}}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Onboarding Date" prop="createdon" *ngIf="tableShowColumn['Onboarding Date']">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.createdon|date:'dd MMM y' || '-'}}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Licenses" prop="licenses" *ngIf="tableShowColumn['Licenses']">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <span (click)="licensedetail(row)" class="link">{{row?.licenses}}</span>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Mobile" prop="mobile" *ngIf="tableShowColumn['Mobile']">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row?.mobile}}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Phone" prop="phoneno" *ngIf="tableShowColumn['Phone']">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row?.phoneno}}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Company" prop="company" *ngIf="tableShowColumn['Company']">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row?.company}}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Address" prop="address" *ngIf="tableShowColumn['Address']">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row?.address}}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Pincode" prop="pincode" *ngIf="tableShowColumn['Pincode']">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row?.pincode}}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Status" prop="isactive" *ngIf="tableShowColumn['Status']">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.isactive?'Activated':'Deactivated'}}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Actions" *ngIf="tableShowColumn['Action']">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <button *ngIf="accessRight.editaccess" (click)="goto('Update',row)" style="color: blue;" class="add-section" mat-flat-button>
+                                    <mat-icon svgIcon="edit"></mat-icon> &nbsp;
+                                </button>
+
+                                <button *ngIf="accessRight.editaccess" (click)="openDialog('Confirmation',row)" style="color: blue;" class="add-section" mat-flat-button>
+                                    <mat-icon *ngIf="!row.isactive" svgIcon="mat_outline:check_circle"></mat-icon>
+                                    <mat-icon *ngIf="row.isactive" svgIcon="feather:x-circle"></mat-icon>
+                                </button>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Detail" prop="id" *ngIf="tableShowColumn['Detail']">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <button style="color: blue;" (click)="licensedetail(row)" class="add-section" mat-flat-button>
+                                    <mat-icon svgIcon="heroicons_outline:chevron-double-right"></mat-icon>
+                                </button>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                    </ngx-datatable>
+
+
+                </div>
+
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+</div>

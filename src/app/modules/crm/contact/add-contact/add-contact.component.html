@@ -1,0 +1,126 @@
+<div class="content-layout fullwidth-basic-normal-scroll">
+    <div class="main">
+
+        <!-- Header -->
+        <div class="header">
+
+            <!-- Title -->
+            <div class="title">
+
+                <h1>{{contactObj.id?'Update':'New'}} Contact</h1>
+            </div>
+
+            <!-- Main actions -->
+            <div class="main-actions">
+
+                <button class="add-task" (click)="gotoView()" mat-flat-button>
+                    Cancel
+                </button>
+
+                <!-- Add section button -->
+                <button class="add-task" (click)="submit()" mat-flat-button [color]="'primary'">
+                    <mat-icon [svgIcon]="'save'"></mat-icon>
+                    Submit
+                </button>
+
+
+            </div>
+
+        </div>
+        <!-- <form> -->
+        <div class="m-8">
+            <h3>Basic Details</h3>
+            <div class="flex flex-col mt-8 p-8 pb-0 bg-card shadow rounded overflow-hidden">
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Name*</mat-label>
+                        <input matInput [(ngModel)]="contactObj.name" [placeholder]="'Enter name'">
+                        <mat-icon matPrefix [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pl-3">
+                        <mat-label>Email*</mat-label>
+                        <input matInput [(ngModel)]="contactObj.email" placeholder="Enter email">
+                        <mat-icon matPrefix [svgIcon]="'email'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Mobile*</mat-label>
+                        <input matInput [(ngModel)]="contactObj.mobile" [placeholder]="'Enter mobile'">
+                        <mat-icon matPrefix [svgIcon]="'phone_iphone'"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pl-3">
+                        <mat-label>Phone No</mat-label>
+                        <input matInput [(ngModel)]="contactObj.telephone" placeholder="Enter phone number">
+                        <mat-icon matPrefix [svgIcon]="'call'"></mat-icon>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Company</mat-label>
+                        <select matNativeControl [(ngModel)]="contactObj.contactcompanyid">
+                            <option *ngFor="let ct of companyList" value="{{ct.id}}">{{ct.name}}</option>
+                        </select>
+                        <mat-icon matPrefix [svgIcon]="'mat_outline:business'"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pl-3">
+                        <mat-label>City*</mat-label>
+                        <select matNativeControl [(ngModel)]="contactObj.cityid">
+                            <option *ngFor="let city of cityList" value="{{city.id}}">{{city.name}}</option>
+                        </select>
+                        <mat-icon matPrefix [svgIcon]="'mat_outline:location_city'"></mat-icon>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Address</mat-label>
+                        <input matInput [(ngModel)]="contactObj.address" [placeholder]="'Enter address'">
+                        <mat-icon matPrefix [svgIcon]="'mat_outline:location_on'"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pl-3">
+                        <mat-label>Pincode</mat-label>
+                        <input matInput [(ngModel)]="contactObj.pincode" placeholder="Enter pincode">
+                        <mat-icon matPrefix [svgIcon]="'mat_outline:push_pin'"></mat-icon>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-col gt-xs:flex-row pb-3">
+                    <mat-form-field class="treo-mat-dense treo-mat-no-subscript w-full">
+                        <mat-label>Submission Email: Tracker fields</mat-label>
+                        <mat-select [(ngModel)]="selectedEmailOption" multiple>
+                            <mat-option *ngFor="let el of emailOptionList" [value]="el.label">{{el.label}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col gt-xs:flex-row">
+                    <div class="flex-auto w-1/2 pt-2 pr-2" *ngFor="let metadata of metaDataList;">
+                        <input-fields [isLabel]="true" [data]="metadata"></input-fields>
+                    </div>
+                </div><br>
+            </div>
+        </div>
+        <div class="header" style="background: transparent !important;">
+            <div class="main-actions">
+
+                <button class="add-task" (click)="gotoView()" mat-flat-button>
+                    Cancel
+                </button>
+
+                <!-- Add section button -->
+                <button class="add-task" (click)="submit()" mat-flat-button [color]="'primary'">
+                    <mat-icon [svgIcon]="'save'"></mat-icon>
+                    Submit
+                </button>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>

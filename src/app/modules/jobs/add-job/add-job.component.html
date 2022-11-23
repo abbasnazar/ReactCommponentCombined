@@ -1,0 +1,395 @@
+<div class="content-layout fullwidth-basic-normal-scroll">
+    <div class="main">
+
+        <!-- Header -->
+        <div class="header">
+
+            <!-- Title -->
+            <div class="title">
+                <strong class="link" onclick="back()">
+                    <span style="font-size: 12px;position: relative;top: -1px;margin-right: 5px;">❮ </span> Back
+                </strong>
+                <h1>New Job</h1>
+            </div>
+
+            <!-- Main actions -->
+            <div class="main-actions">
+
+                <button class="add-task" (click)="gotoJobView()" mat-flat-button>
+                    Cancel
+                </button>
+
+                <!-- Add section button -->
+                <button class="add-task" (click)="submit()" mat-flat-button [color]="'primary'">
+                    <mat-icon [svgIcon]="'save'"></mat-icon>
+                    Save & Find Candidates
+                </button>
+
+
+            </div>
+
+        </div>
+        <!-- <form> -->
+        <div class="m-8">
+            <h3>Basic Details</h3>
+            <div class="flex flex-col mt-8 p-8 pb-0 bg-card shadow rounded overflow-hidden">
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-row gt-xs:pr-3 gt-xs:w-1/2">
+                        <mat-label>Job Title</mat-label>
+                        <input matInput [(ngModel)]="job.title" [placeholder]="'Enter Job Title'">                        
+                    </mat-form-field>
+                    <mat-form-field class="flex-row gt-xs:pr-3 gt-xs:w-1/4">
+                        <mat-label>Reference Number</mat-label>
+                        <input matInput [(ngModel)]="job.reference" placeholder="Reference Number">
+                    </mat-form-field>
+                </div>
+
+                <div class="flex">
+                    <mat-form-field class="treo-mat-textarea flex-auto">
+                        <mat-label>Job Description</mat-label>
+                        <textarea matInput [(ngModel)]="job.description" cdkTextareaAutosize cdkAutosizeMinRows="10"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-row gt-xs:pr-3 gt-xs:w-1/4">
+                        <mat-label>Domain</mat-label>
+                        <select  matNativeControl [(ngModel)]="job.industryname">
+                            <option value="undefined">Select Domain</option>
+                            <option *ngFor="let ind of industryDropdown | unique:'industryname'" [value]="ind.industryname" >
+                              {{ind.industryname}}</option>
+                          </select>
+                    </mat-form-field>
+                    <mat-form-field class="flex-row gt-xs:pr-3 gt-xs:w-1/4">
+                        <mat-label>Industry</mat-label>
+                        <select  matNativeControl [(ngModel)]="job.industrydomain">
+                            <option value="undefined">Select Industry</option>
+                            <option
+                              *ngFor="let dom of industryDropdown | filter :{industryname:job.industryname} |unique:'industrydomain'"
+                              [value]="dom.industrydomain">{{dom.industrydomain}}</option>
+                          </select>
+                    </mat-form-field>
+                    <mat-form-field class="flex-row gt-xs:pr-3 gt-xs:w-1/4">
+                        <mat-label>Job Type</mat-label>
+                        <select  matNativeControl [(ngModel)]="job.role">
+                            <option value="undefined">Select Job type</option>
+                            <option *ngFor="let jt of jobType | unique:'name'" [value]="jt.name" > {{jt.name}} </option>
+                          </select>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-col gt-md:flex-row">
+                    <div class="flex-auto">
+                        <strong>Position</strong>
+                        <mat-radio-group class="flex flex-col" [(ngModel)]="job.positiontype" [color]="'primary'" [value]="'just-good'">
+                            <mat-radio-button *ngFor="let position of positionList" class="mb-2" [value]="position.name">
+                                {{position.name}}
+                            </mat-radio-button>
+
+                        </mat-radio-group>
+                    </div>
+                    <div class="flex-auto">
+                        <strong>Status</strong>
+                        <mat-radio-group class="flex flex-col" [(ngModel)]="job.status" [color]="'primary'" [value]="'just-good'">
+                            <mat-radio-button class="mb-2" [value]="'Open'">
+                                Open
+                            </mat-radio-button>
+                            <mat-radio-button class="mb-2" [value]="'InProcess'">
+                                InProcess
+                            </mat-radio-button>
+                            <mat-radio-button class="mb-2" [value]="'Close'">
+                                Close
+                            </mat-radio-button>
+
+                        </mat-radio-group>
+                    </div>
+                    <div class="flex-auto">
+                        <strong>Priority</strong>
+                        <mat-radio-group [(ngModel)]="job.priority" class="flex flex-col" [color]="'primary'" [value]="'just-good'">
+                            <mat-radio-button class="mb-2" [value]="'Low'">
+                                Low
+                            </mat-radio-button>
+                            <mat-radio-button class="mb-2" [value]="'Medium'">
+                                Medium
+                            </mat-radio-button>
+                            <mat-radio-button class="mb-2" [value]="'High'">
+                                High
+                            </mat-radio-button>
+
+                        </mat-radio-group>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="m-8">
+            <h3>Contact Details</h3>
+            <div class="flex flex-col mt-8 p-8 pb-0 bg-card shadow rounded">
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Contact Company</mat-label>
+                        <select matNativeControl [(ngModel)]="job.contactcompanyid" (ngModelChange)="job.contactpersonid='';job.address=''">
+                            <option [value]="undefined">Select Company</option>
+                            <option *ngFor="let cc of companyList | unique:'contactCompanyId'"
+                                [value]="cc.contactCompanyId">
+                                {{cc.contactCompanyName}}</option>
+                        </select>
+                        <mat-icon matPrefix [svgIcon]="'business'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Contact Person</mat-label>
+                        <select matNativeControl [(ngModel)]="job.contactpersonid" (ngModelChange)="getAddress()">
+                            <option [value]="undefined">Select Contact person</option>
+                            <option
+                                *ngFor="let cp of companyList | filter :{contactCompanyId:job.contactcompanyid} |unique:'contactPersonId'"
+                                [value]="cp.contactPersonId">{{cp.contactPersonName}}</option>
+                        </select>
+                        <mat-icon matPrefix [svgIcon]="'account_circle'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Address</mat-label>
+                        <input matNativeControl [(ngModel)]="job.address">
+
+                        <mat-icon matPrefix [svgIcon]="'room'"></mat-icon>
+                    </mat-form-field>
+                </div>
+
+                <div >
+                    <div class="flex-col gt-xs:pr-3 gt-xs:w-1/3">                       
+                        <ng-multiselect-dropdown                    
+                            [placeholder]="'Select Job Location'" 
+                            [data]="cityList" 
+                            [settings]="locationSettings" 
+                            [(ngModel)]="selectedLocationList"                            
+                            class="text-input">
+                        </ng-multiselect-dropdown>                
+                        <!-- <mat-icon matPrefix [svgIcon]="'room'"></mat-icon> -->
+                    </div>
+                </div>
+
+                <div class="flex flex-col gt-md:flex-row">
+                    <div class="flex flex-col">
+                        <mat-checkbox class="mb-2" [(ngModel)]="job.prefloc" [checked]="true" [color]="'primary'">
+                            Preferred job location is the same
+                        </mat-checkbox>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="m-8">
+            <h3>Skills</h3>
+            <div class="flex flex-col mt-8 p-8 pb-0 bg-card shadow rounded overflow-hidden">
+                <mat-form-field class="flex-auto">
+                    <mat-label>Mandatory Skill (any one)</mat-label>
+                    <mat-chip-list #chipList aria-label="Primary skills selection">
+                        <mat-chip *ngFor="let skill of selectedPrimarySkills" [selectable]="selectable" [removable]="removable" (removed)="remove(skill,'primary')">
+                            {{skill.name}}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
+                        <input placeholder="New Skill" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event,'primary')">
+                    </mat-chip-list>
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto">
+                    <mat-label>Key Skills</mat-label>
+                    <mat-chip-list #chipList1 aria-label="Other skills selection">
+                        <mat-chip *ngFor="let skill of selectedOtherSkills" [selectable]="selectable" [removable]="removable" (removed)="remove(skill,'other')">
+                            {{skill.name}}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
+                        <input placeholder="New Skill" [matChipInputFor]="chipList1" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event,'other')">
+                    </mat-chip-list>
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto">
+                    <mat-label>Exclusions</mat-label>
+                    <mat-chip-list #chipList2 aria-label="Exclusions selection">
+                        <mat-chip *ngFor="let skill of selectedExclusions" [selectable]="selectable" [removable]="removable" (removed)="remove(skill,'exclusions')">
+                            {{skill.name}}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
+                        <input placeholder="New Skill" [matChipInputFor]="chipList2" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event,'exclusions')">
+                    </mat-chip-list>
+                </mat-form-field>
+
+
+            </div>
+        </div>
+
+        <div class="m-8">
+            <h3>Salary</h3>
+            <div class="flex flex-col mt-8 p-8 pb-0 bg-card shadow rounded overflow-hidden">
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-row gt-xs:pr-3 gt-xs:w-1/4">
+                        <mat-label>Currency</mat-label>
+                        <select matNativeControl [(ngModel)]="job.currencyid">
+                            <option value="undefined">Select Currency</option>
+                            <option *ngFor="let currency of currencyList" [value]="currency.id">{{currency.name}}
+                            </option>
+                        </select>
+                        <mat-icon matPrefix [svgIcon]="'heroicons_outline:currency-dollar'"></mat-icon>
+                    </mat-form-field>
+
+                </div>
+
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Bill Start Rate</mat-label>
+                        <input matInput type="number" [(ngModel)]="job.billstartrate" [placeholder]="'Bill start rate'">
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Bill End Rate</mat-label>
+                        <input matInput type="number" [(ngModel)]="job.billendrate" [placeholder]="'Bill end rate'">
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Pay Start Rate</mat-label>
+                        <input matInput type="number" [(ngModel)]="job.paystartrate" [placeholder]="'Pay start rate'">
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Pay End Rate</mat-label>
+                        <input matInput type="number" [(ngModel)]="job.payendrate" [placeholder]="'Pay end rate'">
+                    </mat-form-field>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="m-8">
+            <h3>Other Details</h3>
+            <div class="flex flex-col mt-8 p-8 pb-0 bg-card shadow rounded overflow-hidden">
+
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Openings</mat-label>
+                        <input matInput type="number" [(ngModel)]="job.openings" [placeholder]="'Openings'">
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Max Allowed Submittals</mat-label>
+                        <input matInput type="number" [(ngModel)]="job.allowedsubmittals" [placeholder]="'Max Allowed Submittals'">
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Experience Level</mat-label>
+                        <select matNativeControl [(ngModel)]="job.experiencelevel">
+                            <option value="undefined">Select</option>
+                            <option *ngFor="let e of experienceLevelList" [value]="e.id">{{e.name}}</option>
+                        </select>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                        <mat-label>Notice Period</mat-label>
+                        <select matNativeControl [(ngModel)]="job.noticeperiod">
+                            <option value="undefined">Notice Period</option>
+                            <option *ngFor="let noticePeriod of noticePeriodList" [value]="noticePeriod">
+                                {{noticePeriod}}</option>
+                        </select>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="flex-row gt-xs:pr-3 gt-xs:w-1/4">
+                        <mat-label>Start Date</mat-label>
+                        <input matInput [matDatepicker]="picker1" [(ngModel)]="job.billstartdate" [placeholder]="'start date'">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-row gt-xs:pr-3 gt-xs:w-1/4">
+                        <mat-label>End Date</mat-label>
+                        <input matInput [matDatepicker]="picker2" [(ngModel)]="job.billenddate" [placeholder]="'end date'">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-label>Process Requirements</mat-label>
+                </div><br>
+                <div class="flex flex-col gt-xs:flex-row">
+
+                    <div class="flex-auto gt-xs:pr-3 ">
+                        <mat-checkbox class="mb-2" [(ngModel)]="job.ot" [checked]="true" [color]="'primary'">
+                            OT
+                        </mat-checkbox>
+                    </div>
+                    <div class="flex-auto gt-xs:pr-3 ">
+                        <mat-checkbox class="mb-2" [(ngModel)]="job.references" [checked]="true" [color]="'primary'">
+                            References
+                        </mat-checkbox>
+                    </div>
+                    <div class="flex-auto gt-xs:pr-3 ">
+                        <mat-checkbox class="mb-2" [(ngModel)]="job.travel" [checked]="true" [color]="'primary'">
+                            Travel
+                        </mat-checkbox>
+                    </div>
+                    <div class="flex-auto gt-xs:pr-3 ">
+                        <mat-checkbox class="mb-2" [(ngModel)]="job.drugtest" [checked]="true" [color]="'primary'">
+                            Drug Test
+                        </mat-checkbox>
+                    </div>
+                </div><br>
+                <div class="flex flex-col gt-xs:flex-row">
+                    <div class="flex-col gt-xs:w-1/5 gt-xs:mr-6">
+                        <mat-checkbox [(ngModel)]="job.backgroundcheck" [checked]="false" [color]="'primary'">
+                            Background Check
+                        </mat-checkbox>
+                    </div>
+                    <div class="flex-col gt-xs:w-1/4">
+                        <mat-checkbox [(ngModel)]="job.securityclearance" [checked]="false" [color]="'primary'">
+                            Security Clearance
+                        </mat-checkbox>
+                    </div>
+
+                </div><br>
+
+                <mat-label>Customise Message</mat-label>
+                <div style="color: #5850ec;"><i>* Check to disclose these details to candidates</i></div><br>
+
+                <div class="flex flex-col gt-xs:flex-row">
+
+                    <div class="flex-auto">
+                        <mat-checkbox class="mb-2" [(ngModel)]="job.ctc" [checked]="false" [color]="'primary'">
+                            CTC
+                        </mat-checkbox>
+                    </div>
+                    <div class="flex-auto ">
+                        <mat-checkbox class="mb-2" [(ngModel)]="job.companyname" [checked]="false" [color]="'primary'">
+                            Company Name
+                        </mat-checkbox>
+                    </div>
+                </div><br>
+
+                <div class="flex flex-col gt-xs:flex-row">
+                    <div class="flex-auto w-1/2 p-2" *ngFor="let metadata of metaDataList;">
+                        <input-fields [isLabel]="true" [data]="metadata"></input-fields>
+                    </div>
+                </div><br>
+
+
+            </div>
+        </div>
+        <!-- </form> -->
+        <div class="header" style="background: transparent !important;">
+            <div class="main-actions">
+
+                <button class="add-task" (click)="gotoJobView()" mat-flat-button>
+                    Cancel
+                </button>
+
+                <!-- Add section button -->
+                <button class="add-task" (click)="submit()" mat-flat-button [color]="'primary'">
+                    <mat-icon [svgIcon]="'save'"></mat-icon>
+                    Save & Find Candidates
+                </button>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,37 @@
+<app-loader [isloader]="isloader"></app-loader>
+<div *ngIf="videoInfoObj.length>0 && !videoInfoObj[0].video" class="row" style="height: 95vh;">
+  <div class="col-md-4"></div>
+  <div class="card chatbot col-md-4 col-sm-12">
+    <div class="card-header">
+      <h5>Name : {{userDetails.name}}<br>
+        Email : {{userDetails.email}}</h5>
+    </div>
+    <div class="card-body">
+      <div class="chat-body" id="auto-scroll">
+        <div *ngFor="let chat of chatHistory">
+          <div *ngIf="!chat.link" [class]="chat.type">
+            <h6>{{chat.msg}} </h6>
+          </div>
+          <div *ngIf="chat.link"
+            [class]="chat.type">
+            <h6>
+              <a href="{{chat.msg}}">{{chat.msg}}</a>
+            </h6>
+          </div>
+        </div>
+      </div>
+      <input class="chat-input" [(ngModel)]="msg" (keydown)="send($event)">
+    </div>
+  </div>
+
+</div>
+<div *ngIf="videoInfoObj.length==0" style="text-align: center;padding-top: 0;background: white;color: teal;padding: 10% 0;opacity: .8;">
+  <u><h1>Sorry </h1></u>
+  <strong> Unauthorized user</strong>
+</div>
+<div *ngIf="videoInfoObj.length>0 && videoInfoObj[0].video" style="text-align: center;padding-top: 0;background: white;color: teal;padding: 10% 0;opacity: .8;">
+  <u><h1>Thank You</h1></u>
+  <strong>You Have Already Submitted </strong>
+</div>
+
+<!-- <button (click)="scroll()">scroll</button> -->

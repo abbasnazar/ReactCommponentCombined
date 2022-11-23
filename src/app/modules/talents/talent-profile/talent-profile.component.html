@@ -1,0 +1,93 @@
+<div class="content-layout fullwidth-basic-normal-scroll">
+
+    <!-- Main -->
+    <div class="main">
+
+        <!-- Header -->
+        <div class="header">
+
+            <!-- Title -->
+
+            <div class="title">
+                <strong class="link" onclick="back()">
+                    <span style="font-size: 12px;position: relative;top: -1px;margin-right: 5px;">❮ </span> Back
+                </strong>
+                <h1>{{profileData.name||'-'}}</h1>
+
+                <!-- <div class=" remaining-tasks-count "> -->
+                <!-- <span>{{rows.length}} Types</span> -->
+                <!-- </div> -->
+
+            </div>
+
+            <!-- Main actions -->
+            <div class=" main-actions ">
+                <span class=" search ">
+
+                    <!-- <mat-form-field class=" treo-mat-dense treo-mat-no-subscript ">
+                        <mat-icon matPrefix [svgIcon]=" 'search' "></mat-icon>
+                        <input matInput [autocomplete]=" 'off' " [(ngModel)]=" filterObj.search " (ngModelChange)=" search() "
+                            [placeholder]=" 'Search' ">
+                    </mat-form-field> -->
+                </span>
+                <button class="add-section mr-2" (click)="viewAppliedJob()" mat-flat-button [color]="'primary'">
+                    <mat-icon svgIcon="heroicons_outline:briefcase"></mat-icon>
+                    View Applied Job
+                </button>
+
+                <button class="add-section" (click)="download()" mat-flat-button [color]="'primary'">
+                    <mat-icon [svgIcon]="'heroicons_solid:download'"></mat-icon>
+                    Download Resume
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="flex flex-col gt-xs:flex-row">
+            <div class="gt-xs:w-1/2 p-6 pb-4 bg-card shadow-md rounded overflow-hidden">
+                <div>
+                    <h2>Basic Details</h2>
+                    <div class="p-5" style="border: 1px solid lightblue;height: 100vh;">
+                        <strong style="font-size: 17px;">{{profileData.name||'-'}}</strong><br> {{profileData.email||'-'}}
+                        <br>{{profileData.mobile||'-'}}<br><br>
+                        <strong style="font-size: 17px;">Social Media</strong><br><br>
+                        <div class="link">
+                            <mat-icon svgIcon="mat_outline:facebook"></mat-icon> &nbsp; {{profileData.facebook||'-'}}
+                        </div>
+                        <div class="link">
+                            <mat-icon svgIcon="feather:twitter"></mat-icon> &nbsp; {{profileData.twitter||'-'}}
+                        </div>
+                        <div class="link">
+                            <mat-icon svgIcon="feather:linkedin"></mat-icon> &nbsp; {{profileData.linkedin||'-'}}
+                        </div>
+                        <div class="link">
+                            <mat-icon svgIcon="feather:instagram"></mat-icon> &nbsp; {{profileData.instagram||'-'}}
+                        </div>
+                        <br><strong style="font-size: 17px;">Activity</strong><br><br>
+
+                        <br><strong style="font-size: 17px;">Notes</strong><br><br>
+
+                        <br><strong style="font-size: 17px;">Qualification</strong><br><br> {{profileData.highestdegree||'-'}}
+                        <br><strong style="font-size: 17px;">Licenses</strong><br><br>
+
+                        <br><strong style="font-size: 17px;">Experience</strong><br><br> {{profileData.workexperience||'-'}}
+
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 gt-xs:w-1/2 pb-4 bg-card shadow-md rounded overflow-hidden">
+                <div>
+                    <h2>Resume</h2>
+                    <div style="border: 1px solid lightblue;">
+                        <iframe style="width: 100%;height:100vh;" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+                        </iframe>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

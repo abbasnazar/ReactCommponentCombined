@@ -1,0 +1,160 @@
+<div class="content-layout fullwidth-basic-normal-scroll">
+
+    <treo-card class="auth-card classic gt-xs:w-2/5">
+
+        <!-- Form container -->
+        <div class="form-container gt-xs:w-full">
+            <h1 class="mt-0">Settings</h1>
+            <div class="gt-xs:w-full">
+                <!-- <div>
+                    <mat-icon style="position: relative;top: 8px;" svgIcon="color_lens"></mat-icon> <span style="color: #64748B;font-size: 15px;font-weight: 800;margin-left: 15px;">Theme</span>
+                </div>
+                <div>
+                    <mat-radio-group class="flex mt-5" aria-label="theme">
+                        <mat-radio-button class="flex-auto" value="light">Light</mat-radio-button>
+                        <mat-radio-button class="flex-auto" value="dark">Dark</mat-radio-button>
+                        <mat-radio-button class="flex-auto" value="auto">Auto</mat-radio-button>
+                    </mat-radio-group>
+                </div> -->
+
+                <div class="mt-7">
+                    <mat-icon style="position: relative;top: 8px;" svgIcon="business_center"></mat-icon>
+                    <span style="color: #64748B;font-size: 15px;font-weight: 800;margin-left: 15px;">Job portal
+                        integration</span>
+                </div>
+                <div>
+                    <mat-radio-group class="flex mt-5" aria-label="theme">
+                        <mat-radio-button class="flex-auto" value="naukri">Naukri</mat-radio-button>
+                        <mat-radio-button class="flex-auto" value="moster">Monster</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+                <div>
+                    <div class="mt-5">
+                        <mat-icon style="position: relative;top: 8px;" svgIcon="email"></mat-icon>
+                        <span style="color: #64748B;font-size: 15px;font-weight: 800;margin-left: 15px;">Email
+                            configuration</span>
+                    </div>
+
+                    <div class="flex mt-3">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>SMTP URL</mat-label>
+                            <input id="name" matInput [(ngModel)]="settingObj.hosturl">
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto ml-2">
+                            <mat-label>Port</mat-label>
+                            <input type="number" matInput [(ngModel)]="settingObj.portno">
+                        </mat-form-field>
+                    </div>
+                    <div class="flex mt-3">
+                        <mat-form-field class="flex-auto ">
+                            <mat-label>Email</mat-label>
+                            <input id="email" matInput [(ngModel)]="settingObj.senderemail">
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto ml-2">
+                            <mat-label>Password</mat-label>
+                            <input matInput [(ngModel)]="settingObj.senderpassword">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div *ngIf="!settingObj.id">
+                    <span style="color: red;">Add Setting After That RPA Option Visible</span>
+                </div>
+
+                <div *ngIf="settingObj.id">
+                    <div class="mt-5">
+                        <mat-icon style="position: relative;top: 8px;" svgIcon="email"></mat-icon>
+                        <span style="color: #64748B;font-size: 15px;font-weight: 800;margin-left: 15px;">Naukri
+                            configuration</span> &nbsp;&nbsp;<span style="background: blue;border-radius: 10px;padding: 3px;cursor: pointer;color: white;font-weight: bold;" (click)="openDialog('New',{})"> + </span> &nbsp;
+                    </div>
+
+                    <div class="flex mt-3" *ngFor="let n of settingObj.naukri;let i=index">
+
+                        <div class="flex-auto">{{i+1}} . &nbsp;{{n.username}} </div>
+                        <div class="flex-auto"> <span style="position: relative;top: -5px;">{{n.email}}</span> &nbsp;&nbsp;
+                            <mat-icon style="cursor: pointer;" (click)="openDialog('Update',n)" [svgIcon]="'edit'">
+                            </mat-icon>&nbsp;
+                            <mat-icon style="cursor: pointer;" (click)="openDialog('Delete',n)" [svgIcon]="'delete'">
+                            </mat-icon>
+                        </div>
+
+                    </div>
+
+                    <!-- <div class="flex mt-3" >
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Username</mat-label>
+                            <input id="name" matInput [(ngModel)]="settingObj.naukriusername">
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto ml-2">
+                            <mat-label>Password</mat-label>
+                            <input matInput [(ngModel)]="settingObj.naukripassword">
+                        </mat-form-field>
+                    </div> -->
+
+                    <!-- <div class="flex mt-3">
+                        <mat-form-field class="flex-auto ">
+                            <mat-label>Email</mat-label>
+                            <input id="email" matInput [(ngModel)]="settingObj.naukriemailid">
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto ml-2">
+                            <mat-label>Password</mat-label>
+                            <input matInput [(ngModel)]="settingObj.naukriemailpassword">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="flex mt-3">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>SMTP URL</mat-label>
+                            <input id="name" matInput [(ngModel)]="settingObj.naukriemailhost">
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto ml-2">
+                            <mat-label>Port</mat-label>
+                            <input type="number" matInput [(ngModel)]="settingObj.naukriemailport">
+                        </mat-form-field>
+                    </div> -->
+
+                    <!-- <button style="float: right;" class="submit-button treo-mat-button-large w-1/4" mat-flat-button [color]="'primary'" [disabled]="loader" (click)="openDialog('New', obj = {})">
+                        <span>
+                            New
+                        </span>
+                    </button> -->
+
+                </div>
+
+                <div class="mt-7">
+                    <mat-icon style="position: relative;top: 8px;" svgIcon="phone_forwarded"></mat-icon>
+                    <span style="color: #64748B;font-size: 15px;font-weight: 800;margin-left: 15px;">Click to
+                        Call</span>
+                </div>
+                <br>
+                <mat-form-field>
+                    <mat-label>Mobile</mat-label>
+                    <input type="number" matInput [(ngModel)]="settingObj.mobile">
+                    <mat-icon matPrefix svgIcon="phone_android"></mat-icon>
+                </mat-form-field>
+                <br>
+
+                <button style="float: right;" class="submit-button treo-mat-button-large w-1/4" mat-flat-button [color]="'primary'" [disabled]="loader" (click)="save() ">
+                    <span *ngIf="!loader ">
+                        Save
+                    </span>
+                    <mat-progress-spinner *ngIf="loader" [diameter]="24 " [mode]="'indeterminate'">
+                    </mat-progress-spinner>
+                </button>
+
+                <button style="float: right;" class="submit-button treo-mat-button-large w-1/4 ml-6" mat-flat-button [disabled]="loader" (click)="back()">
+                    Cancel
+                </button>
+
+            </div>
+
+        </div>
+
+    </treo-card>
+
+</div>

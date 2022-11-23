@@ -1,0 +1,13 @@
+<mat-form-field class="treo-mat-dense treo-mat-no-subscript w-full">
+    <mat-label *ngIf="isLabel">{{data.fieldname}}</mat-label>
+    <input *ngIf="data.fieldtype=='Number'" matInput type="number" [(ngModel)]="data.value" [placeholder]="data.fieldname">
+    <input *ngIf="data.fieldtype=='Text'" matInput [(ngModel)]="data.value" [placeholder]="data.fieldname">
+    <select *ngIf="data.fieldtype=='Dropdown'" matNativeControl [(ngModel)]="data.value">
+        <option *ngFor="let data of data.json" [value]="data">{{data}}</option>
+    </select>
+    <div *ngIf="data.fieldtype=='Date'">
+        <input matInput [matDatepicker]="picker2" [(ngModel)]="data.value" [placeholder]="data.fieldname">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+    </div>
+</mat-form-field>

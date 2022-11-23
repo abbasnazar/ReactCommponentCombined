@@ -1,0 +1,46 @@
+<div class="content-layout fullwidth-basic-normal-scroll">
+
+    <!-- Main -->
+    <div class="main">
+
+        <!-- Header -->
+        <div class="header">
+
+            <!-- Title -->
+            <div class="title">
+
+                <h1>Custom Email</h1>
+
+            </div>
+
+            <!-- Main actions -->
+            <div class="main-actions">
+                <mat-form-field class="w-full">
+                    <select class="w-full" matNativeControl [(ngModel)]="emailType" (ngModelChange)="load()">
+                        <option value="">Select </option>
+                        <option value="Chat">Chat </option>
+                        <option value="Submission">Submission </option>
+                        <option value="VideoLink">Video Link </option>
+                        <option value="Resume">Send Resume </option>
+                    </select>
+                </mat-form-field>
+            </div>
+
+        </div>
+        <div class="p-3">
+            <div>
+                <strong>Dynamic variables :-</strong> 
+                <span *ngIf="emailType=='Chat'">username , title , url ,description, company, ctc</span>
+                <span *ngIf="emailType=='Submission'">username, email, mobile, address, title, description, location, openings, ctc, empname, empmobile, empcompany, empdesignation </span>
+                <span *ngIf="emailType=='VideoLink'">username , title </span>
+                <span *ngIf="emailType=='Resume'">username , title </span> &nbsp;&nbsp;&nbsp; (example:- {{' {{username}\} '}})
+            </div>
+            <div>
+                <html-editor [html]="html" (getHtml)="save($event)"></html-editor>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

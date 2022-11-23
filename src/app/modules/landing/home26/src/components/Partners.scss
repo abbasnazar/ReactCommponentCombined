@@ -1,0 +1,28 @@
+.partner {
+    
+    .container{
+        box-shadow: 2px 5px 5px 5px #888888;
+        background-color: #ffffff;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        // margin: 50px 25px;
+        
+        aside {
+            color: #919eab;
+            font-size: 24px;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 100px;
+            padding-top: 15px;
+        }
+
+        .images {
+            // width: 100vw;
+
+            img {
+                height: 40px;
+                width: auto;
+                margin: 30px;
+            }
+        }
+    }
+}
